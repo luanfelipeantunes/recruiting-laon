@@ -20,11 +20,14 @@ class UserController extends Controller
     {
 
         $rules = [
-            "email" => "unique:users,email"
+            "email" => "required | unique:users,email",
+            "name" => 'required',
+            "password" => 'required'
         ];
 
         $messages = [
-            "unique" => "O e-mail já existe no base de dados"
+            "unique" => "O e-mail já existe no base de dados",
+            "required" => "O campo :attribute é obrigatório"
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);

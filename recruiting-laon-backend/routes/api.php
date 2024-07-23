@@ -18,7 +18,7 @@ use App\Http\Controllers\UserController;
 Route::prefix('users')->group(function () {
     Route::post('/', [UserController::class, 'store']);
     Route::get('/', [UserController::class, 'index']);
-    Route::get('/:id', [UserController::class, 'show']);
-    Route::patch('/:id', [UserController::class, 'update']);
-    Route::delete('/:id', [UserController::class, 'delete']);
+    Route::get('/{id}', [UserController::class, 'show']);
+    Route::patch('/{id}', [UserController::class, 'update']);
+    Route::delete('/{id}', [UserController::class, 'destroy']);
 });
