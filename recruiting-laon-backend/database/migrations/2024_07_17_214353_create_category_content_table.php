@@ -17,6 +17,7 @@ class CreateCategoryContentTable extends Migration
             $table->id();
             $table->foreignId('category_id')->constrained();
             $table->foreignId('content_id')->constrained();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

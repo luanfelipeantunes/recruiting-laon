@@ -18,6 +18,7 @@ class CreateSeasonsTable extends Migration
             $table->foreignId("content_id")->constrained()->onDelete('cascade');
             $table->string('title');
             $table->integer("number");
+            $table->softDeletes();
             $table->timestamps();
         });
     }

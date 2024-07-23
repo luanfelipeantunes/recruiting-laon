@@ -19,6 +19,7 @@ class CreateEpisodesTable extends Migration
             $table->string("title");
             $table->integer("number");
             $table->integer("duration");
+            $table->softDeletes();
             $table->timestamps();
         });
     }
