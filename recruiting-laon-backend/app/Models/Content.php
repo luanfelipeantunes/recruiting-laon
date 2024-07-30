@@ -8,11 +8,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Content extends Model
 {
-    use HasFactory;
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        "title", "original_title", "year", "duration", "synopsis", "cast", "awards", "director"
+        "title", "original_title", "year", "duration", "synopsis", "cast", "awards", "director", "thumbnail"
     ];
 
     protected $casts = [
