@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContentsController;
 use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\SeasonController;
@@ -50,3 +51,6 @@ Route::prefix('episodes')->group(function() {
     Route::patch('/{id}', [EpisodeController::class, 'update']);
     Route::delete('/{id}', [EpisodeController::class, 'destroy']);
 });
+
+Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logout', [AuthController::class, 'logout']);

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Auth\Events\Login;
 use Illuminate\Contracts\Validation\Validator as ValidationValidator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -36,7 +38,14 @@ class UserController extends Controller
             return response()->json(['error' => $validator->errors()], 422);
         }
 
-        $user = User::create($request->all());
+        $user = User::create([
+            "email" => $request->email,
+            "name" => $request->name,
+            "password" => Hash::make($request->password)
+        ]);
+
+        $login = new AuthController();
+        $login->login($request);
 
         return response()->json($user, 201);
     }

@@ -62,13 +62,11 @@ class EpisodeController extends Controller
     public function update(Request $request, $id)
     {
         $rules = [
-            "title" => 'required',
-            "number" => 'required | min:0',
-            "season_id" => 'required | min:0 |exists:seasons,id'
+            "number" => 'min:0',
+            "season_id" => 'min:0 |exists:seasons,id'
         ];  
 
         $messages = [
-            'required' => 'O campo :attribute é obrigatório',
             'min' => 'O campo :attribute não pode ser menor que :min',
             'exists' => 'O campo :attribute não existe'
         ];
