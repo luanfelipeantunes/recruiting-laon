@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Content;
 use App\Models\Season;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -37,6 +38,12 @@ class SeasonController extends Controller
         
         if($validator->fails()){
             return response()->json(['error' => $validator->errors()], 422);
+        }
+
+        //Verificando se o content_id é uma serie
+        $content = Content::findOrFail($request->content_id);
+        if($content->type_content == 'MOVIE'){
+            return response()->json(['error' => 'O conteúdo deve ser uma série'], 422);
         }
         
         //Verificando se já existe uma temporada com esse número para esse conteúdo
