@@ -11,7 +11,7 @@ class Content extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        "title", "original_title", "year", "duration", "synopsis", "cast", "awards", "director", "thumbnail"
+        "title", "original_title", "year", "duration", "synopsis", "cast", "awards", "director", "thumbnail", "type_content"
     ];
 
     protected $casts = [

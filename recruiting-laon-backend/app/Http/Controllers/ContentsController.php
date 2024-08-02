@@ -23,8 +23,8 @@ class ContentsController extends Controller
             "title" => 'required',
             "year" => 'required | min:0 |',
             "duration" => 'required | min:0',
-            "thumbnail" => 'image | mimes:jpeg,jpg,png,svg | max: 2048'
-            
+            "thumbnail" => 'image | mimes:jpeg,jpg,png,svg | max: 2048',
+            "type_content" => 'required | in:MOVIE,SERIE',
         ];
 
         $messages = [
@@ -32,7 +32,8 @@ class ContentsController extends Controller
             'min' => 'O campo :attribute não pode ser menor que :min',
             'image' => "O campo :attribute deve ser uma imagem",
             'mimes' => "O campo :attribute deve ser do tipo :values",
-            'max' => "O campo ::attribute não deve ser maior que :max kb"
+            'max' => "O campo ::attribute não deve ser maior que :max kb",
+            'in' => "O campo :attribute deve ser um dos seguintes tipos: :values"
         ];
 
         $validator = Validator::make($request->all(), $rules, $messages);
@@ -68,9 +69,31 @@ class ContentsController extends Controller
 
     public function update(Request $request, $id)
     {
+
+        $rules = [
+            "year" => 'min:0',
+            "duration" => 'min:0',
+            "thumbnail" => 'image | mimes:jpeg,jpg,png,svg | max: 2048',
+            "type_content" => 'in:MOVIE,SERIE',
+        ];
+
+        $messages = [
+            'min' => 'O campo :attribute não pode ser menor que :min',
+            'image' => "O campo :attribute deve ser uma imagem",
+            'mimes' => "O campo :attribute deve ser do tipo :values",
+            'max' => "O campo ::attribute não deve ser maior que :max kb",
+            'in' => "O campo :attribute deve ser um dos seguintes tipos: :values"
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if($validator->fails()){
+            return response()->json(['error' => $validator->errors()], 422);
+        }
+
         $content = Content::findOrFail($id);
     
-        $data = $request->only(['title', 'original_title', 'year', 'duration', 'synopsis', 'cast', 'awards', 'director', 'ratings']);
+        $data = $request->all();
     
         $content->update($data);
     

@@ -25,6 +25,7 @@ class CreateContentsTable extends Migration
             $table->string("director")->nullable();
             $table->float("ratings")->nullable();
             $table->string("thumbnail")->nullable();
+            $table->string("type_content");
             $table->softDeletes();
             $table->timestamps();
         });
