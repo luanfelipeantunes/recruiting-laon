@@ -1,0 +1,12 @@
+.formBox{
+    width: 460px;
+    margin: auto;
+    background-color: var(--gray-200);
+    padding:  64px;
+}
+
+h2{
+    margin-top: -10px;
+    margin-bottom: 26px;
+    color: var(--gray-500);
+}

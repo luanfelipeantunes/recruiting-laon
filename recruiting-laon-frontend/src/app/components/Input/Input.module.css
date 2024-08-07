@@ -1,0 +1,30 @@
+.input{
+    width: 378px;
+    height: 68px;
+    border: 1px solid var(--gray-300);
+    border-radius: 4px;
+    background-color: var(--gray-200);
+    margin-bottom: 20px;
+}
+
+.input::placeholder{
+    position: relative;
+    color: var(--gray-500);
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    left: 24px;
+}
+
+.eyeIcon{
+    position: relative;
+    left: -35px;
+    top: 7px;
+}
+
+.eyeIcon > svg{
+    width: 20px;
+    height: 20px;
+    fill: var(--gray-400);
+    cursor: pointer;
+}

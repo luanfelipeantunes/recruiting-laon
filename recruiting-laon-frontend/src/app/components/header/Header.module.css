@@ -1,0 +1,12 @@
+.header {
+    border-bottom: 1px solid var(--gray-300);
+    padding: 14px 0;
+    height: 67px;
+}
+
+ul {
+    display: flex;
+    list-style: none;
+    justify-content: space-around;
+    align-items: center;
+}

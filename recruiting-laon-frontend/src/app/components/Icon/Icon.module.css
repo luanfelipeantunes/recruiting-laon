@@ -1,0 +1,14 @@
+svg{
+    width: 14px;
+    height: 14px;
+}
+
+.container{
+    display: flex;
+    width: 30px;
+    height: 30px;
+    border: 1px solid var(--gray-400);
+    border-radius: 50%;
+    justify-content: center;
+    align-items: center;
+}
