@@ -1,10 +1,10 @@
-import { useState } from "react";
 import FormBox from "../components/FormBox/FormBox";
-import Header from "../components/header/Header";
 import Icon from "../components/Icon/Icon";
 import Input from "../components/Input/Input";
 import Logo from "../img/Logo.png";
 import { FaArrowLeft } from "react-icons/fa6";
+import Button from "../components/Button/Button";
+import Header from "../components/Header/Header";
 
 function Login() {
 
@@ -18,20 +18,18 @@ function Login() {
 
   //Links que serão exibidos no Header
   const links = [
-    { href: "/register", content: <div style={styles}> <Icon> <FaArrowLeft /> </Icon> VOLTAR </div>},
+    { href: "/register", content: <div style={styles}> <Icon> <FaArrowLeft /> </Icon> <span className="element-hidden">VOLTAR</span> </div> },
     { href: "/", content: <img src={Logo} alt="Logo LaonLabs" /> },
-    { href: "/register", content: "CADASTRAR" },
+    { href: "/register", content: <span className="element-hidden">CADASTRAR</span> },
   ];
 
-  const [passwordVisible, setPasswordVisible] = useState(false);
   return <>
     <Header links={links} />
-    <div style={{height: '80vh', display:'flex'}}>
-      <FormBox>
-        <Input type="text" placeholder="E-mail" />
-        <Input type="password" placeholder="Senha"/>
-      </FormBox>
-    </div>
+    <FormBox title="Entrar" subtitle="Bem vindo(a) de volta!">
+      <Input type="text" placeholder="E-mail" />
+      <Input type="password" placeholder="Senha" />
+      <Button> Entrar </Button>
+    </FormBox>
   </ >
 }
 

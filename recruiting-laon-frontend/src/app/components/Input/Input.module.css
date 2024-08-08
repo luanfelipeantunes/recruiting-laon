@@ -18,8 +18,9 @@
 
 .eyeIcon{
     position: relative;
-    left: -35px;
-    top: 7px;
+    align-self: flex-end;
+    top: -65px;
+    right: 20px;
 }
 
 .eyeIcon > svg{

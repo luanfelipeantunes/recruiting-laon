@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom";
-import styles from './Header.module.css';
+import './Header.css';
 
 
 function Header({links}) {
     return (
-        <header className={styles.header}>
+        <header className="header">
             <nav>
                 <ul>
                     {links.map((links, index) => (
-                        <li key={index} className="semibold16">
+                        <li key={index} className={`semibold16 ${`header-link-${index}`}`}>
                             <Link to={links.href}>
                                 {links.content}
                             </Link>
