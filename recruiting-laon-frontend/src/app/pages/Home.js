@@ -25,7 +25,10 @@ function Home() {
         <Container>
             <h1 className="semibold40"> Populares </h1>
 
-            <ContentsLine />
+            <ContentsLine title="FILMES"/>
+
+            <ContentsLine title="SERIES"/>
+
 
         </Container>
     </>;
