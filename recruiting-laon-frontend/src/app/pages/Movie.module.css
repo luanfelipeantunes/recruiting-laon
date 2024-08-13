@@ -1,0 +1,14 @@
+.container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.aside{
+    margin: 50px 70px 50px 0;
+}
+
+.aside img{
+    width: 306px;
+    height: 448px;
+    margin-bottom: 15px;
+}

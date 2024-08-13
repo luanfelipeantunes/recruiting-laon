@@ -4,11 +4,16 @@
     height: 67px;
 }
 
-ul {
+.listItens {
+    margin: 0 auto;
+    width: 88%;
+    height: 100%;
     display: flex;
     list-style: none;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+    position: relative;   
+    left: -19px;
 }
 
 .header-letter{
@@ -21,9 +26,20 @@ ul {
     font-size: 16px;
 }
 
+.element-hidden {
+    margin-left: 12px;
+}
+
 @media (max-width: 768px) {
     .element-hidden {
         display: none;
     }
-    
+
+    .listItens {
+        width: 85%;
+    }
+
+    .header-link-2{
+        display: none;
+    }
 }

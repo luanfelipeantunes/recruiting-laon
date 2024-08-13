@@ -1,0 +1,12 @@
+.content{
+    width: 100%;
+
+}
+
+.content h3{
+    border-bottom: 1px solid var(--gray-300);
+}
+
+.content p{
+    color: var(--gray-500);
+}

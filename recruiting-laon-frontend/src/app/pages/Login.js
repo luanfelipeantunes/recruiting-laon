@@ -13,7 +13,6 @@ function Login() {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    width: "120px",
   };
 
   //Links que serão exibidos no Header
