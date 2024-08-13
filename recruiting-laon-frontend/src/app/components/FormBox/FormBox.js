@@ -7,6 +7,7 @@ function FormBox({title, subtitle, children}){
                 <h1 className="semibold24">{title}</h1>
                 <h2 className="regular16" style={{marginBottom: '35px'}}>{subtitle}</h2>
                 {children}
+
             </div>
         </div>
     )

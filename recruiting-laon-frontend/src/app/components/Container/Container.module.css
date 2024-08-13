@@ -1,0 +1,6 @@
+.container{
+    width: 88%;
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+}

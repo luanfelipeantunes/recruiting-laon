@@ -1,13 +1,8 @@
+import styles from "./Container.module.css";
+
 function Container({children}){
 
-    const styles = {
-        width: '85%',
-        display: 'flex',
-        margin: '0 auto',
-        flexDirection: 'column',
-    };
-
-    return <div style={styles}>
+    return <div className={styles.container}>
         {children}
     </div>
 }

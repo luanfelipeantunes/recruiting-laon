@@ -4,12 +4,13 @@ ul {
 
 .footer {
     height: 112px;
+    margin-top: 80px;
     border-top: 1px solid var(--gray-300);
     display: flex;
 }
 
 .footerList {
-    width: 85%;
+    width: 88%;
     margin: auto;
     display: flex;
     justify-content: space-between;

@@ -5,11 +5,13 @@ import Logo from "../img/Logo.png";
 import { FaArrowLeft } from "react-icons/fa6";
 import Button from "../components/Button/Button";
 import Header from "../components/Header/Header";
+import styles from "./styles/Login.module.css";
+import { Link } from "react-router-dom";
 
 function Login() {
 
   //Estilo a ser aplicado na div que contém o ícone e o texto de "Voltar"
-  const styles = {
+  const style = {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
@@ -17,7 +19,7 @@ function Login() {
 
   //Links que serão exibidos no Header
   const links = [
-    { href: "/register", content: <div style={styles}> <Icon> <FaArrowLeft /> </Icon> <span className="element-hidden">VOLTAR</span> </div> },
+    { href: "/register", content: <div style={style}> <Icon> <FaArrowLeft /> </Icon> <span className="element-hidden">VOLTAR</span> </div> },
     { href: "/", content: <img src={Logo} alt="Logo LaonLabs" /> },
     { href: "/register", content: <span className="element-hidden">CADASTRAR</span> },
   ];
@@ -28,6 +30,8 @@ function Login() {
       <Input type="text" placeholder="E-mail" />
       <Input type="password" placeholder="Senha" />
       <Button> Entrar </Button>
+
+      <span className={`semibold16 ${styles.mobileLink}`}> <Link to='/register'> CADASTRAR </Link> </span>
     </FormBox>
   </ >
 }
