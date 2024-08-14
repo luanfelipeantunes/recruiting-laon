@@ -1,3 +1,4 @@
+import Background from "../components/Container/Background";
 import Container from "../components/Container/Container";
 import ContentsLine from "../components/ContentsLine/ContentsLine";
 import Footer from "../components/Footer/Footer";
@@ -22,18 +23,17 @@ function Home() {
     ];
 
     return <>
-        <Header links={links} />
-        <Container>
-            <h1 className="semibold40"> Populares </h1>
+        <Background>
+            <Header links={links} />
 
-            <ContentsLine title="FILMES"/>
+            <Container>
+                <h1 className="semibold40"> Populares </h1>
+                <ContentsLine title="FILMES" />
+                <ContentsLine title="SERIES" />
+            </Container>
+        </Background>
 
-            <ContentsLine title="SERIES"/>
-
-
-        </Container>
-
-        <Footer/>
+        <Footer />
     </>
 }
 

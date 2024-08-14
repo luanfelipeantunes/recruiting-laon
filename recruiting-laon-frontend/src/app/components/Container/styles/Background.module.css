@@ -1,0 +1,4 @@
+.background{
+    width: 100%;
+    background: linear-gradient(to bottom, var(--gray-200) 368px, var(--gray-100) 368px);
+}
