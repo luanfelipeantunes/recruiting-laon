@@ -6,10 +6,30 @@ import { FaArrowLeft } from "react-icons/fa6";
 import Button from "../components/Button/Button";
 import Header from "../components/Header/Header";
 import styles from "./styles/Login.module.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { signin } from "../Utils/Auth/AuthActions";
 
 function Login() {
 
+  const [credentials, setCredentials] = useState({ email: "", password: "" });
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+    console.log(credentials);
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = await signin(credentials);
+    
+    if (data.status === 200) {
+      navigate("/home");
+    } else {
+      console.log("Erro ao realizar login");
+    }
+  }
   //Estilo a ser aplicado na div que contém o ícone e o texto de "Voltar"
   const style = {
     display: "flex",
@@ -27,9 +47,9 @@ function Login() {
   return <>
     <Header links={links} />
     <FormBox title="Entrar" subtitle="Bem vindo(a) de volta!">
-      <Input type="text" placeholder="E-mail" />
-      <Input type="password" placeholder="Senha" />
-      <Button> Entrar </Button>
+      <Input type="text" placeholder="E-mail" name="email" handleChange={handleChange} />
+      <Input type="password" placeholder="Senha" name="password" handleChange={handleChange} />
+      <Button handleSubmit={handleSubmit}> Entrar </Button>
 
       <span className={`semibold16 ${styles.mobileLink}`}> <Link to='/register'> CADASTRAR </Link> </span>
     </FormBox>
