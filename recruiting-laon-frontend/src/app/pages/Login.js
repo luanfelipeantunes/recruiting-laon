@@ -17,12 +17,13 @@ function Login() {
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
-    console.log(credentials);
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = await signin(credentials);
+    console.log(data);
+    
     
     if (data.status === 200) {
       navigate("/home");
@@ -30,6 +31,7 @@ function Login() {
       console.log("Erro ao realizar login");
     }
   }
+
   //Estilo a ser aplicado na div que contém o ícone e o texto de "Voltar"
   const style = {
     display: "flex",

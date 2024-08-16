@@ -25,7 +25,7 @@ function Input({ type, placeholder, name, handleChange }) {
             <input className={styles.input} type={type}
                 placeholder={placeholder}
                 name={name}
-                onChange={handleChange}
+                onChange={handleChange} 
             />
         }
     </>
