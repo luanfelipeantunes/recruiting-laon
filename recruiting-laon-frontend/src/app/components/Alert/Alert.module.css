@@ -1,0 +1,7 @@
+
+.alert{
+    background-color: var(--feedback-negative);
+    border-radius: 6px;
+    text-align: center;
+    padding: 10px;
+}

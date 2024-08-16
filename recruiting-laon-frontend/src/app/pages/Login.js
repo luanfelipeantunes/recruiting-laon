@@ -9,11 +9,13 @@ import styles from "./styles/Login.module.css";
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { signin } from "../Utils/Auth/AuthActions";
+import Alert from "../components/Alert/Alert";
 
 function Login() {
 
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const navigate = useNavigate();
+  const [message, setMessage] = useState("");
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -23,12 +25,12 @@ function Login() {
     e.preventDefault();
     const data = await signin(credentials);
     console.log(data);
-    
-    
+
+
     if (data.status === 200) {
       navigate("/home");
     } else {
-      console.log("Erro ao realizar login");
+      setMessage("Credenciais incorretas!");
     }
   }
 
@@ -47,14 +49,21 @@ function Login() {
   ];
 
   return <>
+
     <Header links={links} />
-    <FormBox title="Entrar" subtitle="Bem vindo(a) de volta!">
+
+    <FormBox>
+      { message && <Alert />}
+
+      <h1 className="semibold24"> Entrar </h1>
+      <h2 className={`regular16 ${styles.subtitle}`} > Bem vindo(a) de volta! </h2>
       <Input type="text" placeholder="E-mail" name="email" handleChange={handleChange} />
       <Input type="password" placeholder="Senha" name="password" handleChange={handleChange} />
       <Button handleSubmit={handleSubmit}> Entrar </Button>
 
       <span className={`semibold16 ${styles.mobileLink}`}> <Link to='/register'> CADASTRAR </Link> </span>
     </FormBox>
+    
   </ >
 }
 
