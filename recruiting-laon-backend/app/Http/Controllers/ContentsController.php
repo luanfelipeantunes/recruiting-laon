@@ -94,6 +94,13 @@ class ContentsController extends Controller
         $content = Content::findOrFail($id);
     
         $data = $request->all();
+        
+        if($request->hasFile('thumbnail')){
+            $image = $request->file('thumbnail');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move(public_path('img/contents'), $imageName);
+            $data['thumbnail'] = 'img/contents/' . $imageName;
+        }
     
         $content->update($data);
     

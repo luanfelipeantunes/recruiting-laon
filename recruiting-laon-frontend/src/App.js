@@ -12,13 +12,13 @@ function App() {
     <Router>
 
       <Routes>
-        //Redirecionar para Home
-        <Route path="/" element={<Login />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/" element={<Home />} />
         <Route path='/home' element={<Home />} />
-        <Route path='/movie' element={<Movie />} />
+        <Route path='/movie/:id' element={<Movie />} />
+        
       </Routes>
 
     </Router>

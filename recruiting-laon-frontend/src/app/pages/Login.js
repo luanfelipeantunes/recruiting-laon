@@ -7,15 +7,25 @@ import Button from "../components/Button/Button";
 import Header from "../components/Header/Header";
 import styles from "./styles/Login.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { signin } from "../Utils/Auth/AuthActions";
 import Alert from "../components/Alert/Alert";
+import { useAuth } from "../Utils/Auth/AuthContext";
 
 function Login() {
 
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
+  const [buttonLoading, setButtonLoading] = useState(false);
+  const { isAuthenticated } = useAuth();
+
+  //Verifica se o usuário está autenticado, se sim, redireciona para a página Home
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/home");
+    }
+  }, [isAuthenticated]);
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -23,6 +33,7 @@ function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setButtonLoading(true);
     const data = await signin(credentials);
     console.log(data);
 
@@ -32,6 +43,8 @@ function Login() {
     } else {
       setMessage("Credenciais incorretas!");
     }
+
+    setButtonLoading(false);
   }
 
   //Estilo a ser aplicado na div que contém o ícone e o texto de "Voltar"
@@ -53,17 +66,17 @@ function Login() {
     <Header links={links} />
 
     <FormBox>
-      { message && <Alert />}
+      {message && <Alert />}
 
       <h1 className="semibold24"> Entrar </h1>
       <h2 className={`regular16 ${styles.subtitle}`} > Bem vindo(a) de volta! </h2>
       <Input type="text" placeholder="E-mail" name="email" handleChange={handleChange} />
       <Input type="password" placeholder="Senha" name="password" handleChange={handleChange} />
-      <Button handleSubmit={handleSubmit}> Entrar </Button>
+      <Button handleSubmit={handleSubmit} isLoading={buttonLoading}> Entrar </Button>
 
       <span className={`semibold16 ${styles.mobileLink}`}> <Link to='/register'> CADASTRAR </Link> </span>
     </FormBox>
-    
+
   </ >
 }
 

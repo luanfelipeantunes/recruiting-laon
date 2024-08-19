@@ -5,6 +5,12 @@
     align-items: center;
 }
 
+.elements{
+    display: flex;
+    flex-direction: column;
+    width: 384px;
+}
+
 .formBox{
     display: flex;
     flex-direction: column;
@@ -15,6 +21,7 @@
     background-color: var(--gray-200);
     border-radius: 8px;
     padding: 40px;
+    margin: 20px 0;
 }
 
 @media (max-width: 768px){

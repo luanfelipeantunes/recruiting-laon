@@ -3,6 +3,12 @@
     text-align: center;
 }
 
+.subtitle{
+    margin-top: -10px;
+    margin-bottom: 26px;
+    color: var(--gray-500);
+}
+
 @media (max-width: 768px){
     .mobileLink{
         display: block;
