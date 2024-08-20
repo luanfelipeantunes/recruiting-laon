@@ -8,26 +8,17 @@ import Button from "../components/Button/Button";
 import styles from "./styles/Movie.module.css";
 import Infos from "../components/Infos/Infos";
 import Background from "../components/Container/Background";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosInstance from "../Utils/Utils";
 import { Constants } from "../Utils/Contants";
 import Loader from 'react-js-loader';
-import { useAuth } from "../Utils/Auth/AuthContext";
 
 function Movie() {
 
     const id = useParams().id;
     const [content, setContent] = useState();
-    const navigate = useNavigate();
-    const { isAuthenticated } = useAuth();
-
-    //Verifica se o usuário está autenticado, se não, redireciona para a página de login
-    useEffect(() => {
-        if (!isAuthenticated) {
-            navigate("/login");
-        }
-    }, [isAuthenticated]);
+    const [loading, setLoading] = useState(true);
 
     const style = {
         display: 'flex',
@@ -42,9 +33,11 @@ function Movie() {
     ];
 
     useEffect(() => {
+        setLoading(true);
         axiosInstance.get(Constants.baseUrl + '/contents/' + id)
             .then((response) => {
                 setContent(response.data);
+                setLoading(false);
             })
             .catch((error) => {
                 console.log(error);
@@ -56,7 +49,7 @@ function Movie() {
             <Header links={links} />
             <Container>
 
-                {!content ? (<Loader type="box-rectangular" bgColor="var(--white)" size={100} />
+                {loading ? (<Loader type="box-rectangular" bgColor="var(--white)" size={100} />
                 ) : (
                     <div className={styles.container}>
                         <div className={styles.thumb}>

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Button from "../components/Button/Button";
 import FormBox from "../components/FormBox/FormBox";
 import Header from "../components/Header/Header";
@@ -6,21 +6,10 @@ import Icon from "../components/Icon/Icon";
 import Input from "../components/Input/Input";
 import Logo from "../img/Logo.png";
 import styles from "./styles/Register.module.css";
-import { FaArrowLeft } from "react-icons/fa6"; import { useAuth } from "../Utils/Auth/AuthContext";
-import { useEffect } from "react";
-;
+import { FaArrowLeft } from "react-icons/fa6";
+
 
 function Register() {
-
-    const { isAuthenticated } = useAuth();
-    const navigate = useNavigate();
-
-    //Verifica se o usuário está autenticado, se sim, redireciona para a página Home
-    useEffect(() => {
-        if (isAuthenticated) {
-            navigate("/home");
-        }
-    }, [isAuthenticated]);
 
     //Estilo a ser aplicado na div que contém o ícone e o texto de "Voltar"
     const style = {

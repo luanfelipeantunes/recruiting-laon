@@ -7,31 +7,30 @@ import Button from "../components/Button/Button";
 import Header from "../components/Header/Header";
 import styles from "./styles/Login.module.css";
 import { Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { signin } from "../Utils/Auth/AuthActions";
+import { useState } from "react";
 import Alert from "../components/Alert/Alert";
 import { useAuth } from "../Utils/Auth/AuthContext";
 
 function Login() {
 
+
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const navigate = useNavigate();
   const [message, setMessage] = useState("");
   const [buttonLoading, setButtonLoading] = useState(false);
-  const { isAuthenticated } = useAuth();
+  const { signin, isAuthenticated } = useAuth();
 
-  //Verifica se o usuário está autenticado, se sim, redireciona para a página Home
-  useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/home");
-    }
-  }, [isAuthenticated]);
+  if (isAuthenticated) {
+    //eslint-disable-next-line
+    navigate("/home");
+  }
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   }
 
   const handleSubmit = async (e) => {
+
     e.preventDefault();
     setButtonLoading(true);
     const data = await signin(credentials);

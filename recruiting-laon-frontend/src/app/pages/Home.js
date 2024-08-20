@@ -9,25 +9,15 @@ import Logo from "../img/Logo.png";
 import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axiosInstance from "../Utils/Utils";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "../Utils/Auth/AuthContext";
 
 
 function Home() {
 
+    const [loading, setLoading] = useState(true);
+    //eslint-disable-next-line
     const [contents, setContents] = useState([]);
     const [movies, setMovies] = useState([]);
     const [series, setSeries] = useState([]);
-    const navigate = useNavigate();
-    const { isAuthenticated } = useAuth();
-
-    //Verifica se o usuário está autenticado, se não, redireciona para a página de login
-    useEffect(() => {
-        if (!isAuthenticated) {
-            navigate("/login");
-        }
-        // eslint-disable-next-line
-    }, []);
 
     const styles = {
         display: 'flex',
@@ -43,6 +33,8 @@ function Home() {
 
     useEffect(() => {
 
+        setLoading(true);
+
         axiosInstance.get('/contents')
             .then(response => {
                 setContents(response.data);
@@ -50,6 +42,8 @@ function Home() {
                 //Filtrando os conteúdos por tipo
                 setMovies(response.data.filter(content => content.type_content === 'MOVIE').slice(0, 6));
                 setSeries(response.data.filter(content => content.type_content === 'SERIE').slice(0, 6));
+
+                setLoading(false);
             })
             .catch(error => {
                 console.error(error);
@@ -62,7 +56,7 @@ function Home() {
         <Background>
             <Header links={links} />
             <Container>
-                {!contents ? (<Loader type="box-rectangular" bgColor="var(--white)" size={100} />
+                {loading ? (<Loader type="box-rectangular" bgColor="var(--white)" size={100} />
                 ) : (
                     <>
                         <h1 className="semibold40"> Populares </h1>
