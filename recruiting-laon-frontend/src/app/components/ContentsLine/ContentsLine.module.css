@@ -1,8 +1,9 @@
 .gridContents{
     display: grid;
     overflow: hidden;
-    grid-template-columns: repeat(6, 15%);
-    grid-template-rows: 100%;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(1, 1.47fr);
+    gap: 26px;
     justify-content: space-between;
     margin-bottom: 26px;
 }

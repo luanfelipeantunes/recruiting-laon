@@ -60,8 +60,8 @@ function Home() {
                 ) : (
                     <>
                         <h1 className="semibold40"> Populares </h1>
-                        <ContentsLine title="FILMES" contents={movies} />
-                        <ContentsLine title="SERIES" contents={series} />
+                        <ContentsLine title="FILMES" contents={movies} link="/movies"/>
+                        <ContentsLine title="SERIES" contents={series} link='/series'/>
                     </>
                 )
 
