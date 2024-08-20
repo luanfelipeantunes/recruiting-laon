@@ -65,7 +65,7 @@ function Login() {
     <Header links={links} />
 
     <FormBox>
-      {message && <Alert />}
+      {message && <Alert message={message}/>}
 
       <h1 className="semibold24"> Entrar </h1>
       <h2 className={`regular16 ${styles.subtitle}`} > Bem vindo(a) de volta! </h2>

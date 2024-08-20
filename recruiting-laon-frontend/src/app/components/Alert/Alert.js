@@ -1,9 +1,9 @@
 import styles from "./Alert.module.css";
 
-function Alert(){
+function Alert({ message }) {
     return (
-        <div className={styles.alert} role="alert">
-            Credenciais incorretas!
+        <div className={styles.alert} role="alert" >
+            {message}
         </div>
     );
 }
