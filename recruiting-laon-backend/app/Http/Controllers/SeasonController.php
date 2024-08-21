@@ -6,6 +6,7 @@ use App\Models\Content;
 use App\Models\Season;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Validation\ValidationRules;
 
 class SeasonController extends Controller
 {
@@ -22,34 +23,29 @@ class SeasonController extends Controller
 
     public function store(Request $request)
     {
-        $rules = [
-            "title" => 'required',
-            "number" => 'required | min:0',
-            "content_id" => 'required | min:0 |exists:contents,id'
-        ];  
+        $rules = ValidationRules::seasonsRules();
 
-        $messages = [
-            'required' => 'O campo :attribute é obrigatório',
-            'min' => 'O campo :attribute não pode ser menor que :min',
-            'exists' => 'O campo :attribute não existe'
-        ];
+        $messages = ValidationRules::seasonsMessages();
    
         $validator = Validator::make($request->all(), $rules, $messages);
         
-        if($validator->fails()){
+        if($validator->fails())
+        {
             return response()->json(['error' => $validator->errors()], 422);
         }
 
         //Verificando se o content_id é uma serie
         $content = Content::findOrFail($request->content_id);
-        if($content->type_content == 'MOVIE'){
+        if($content->type_content == 'MOVIE')
+        {
             return response()->json(['error' => 'O conteúdo deve ser uma série'], 422);
         }
         
         //Verificando se já existe uma temporada com esse número para esse conteúdo
         $existingSeason = Season::where('content_id', $request->content_id)->where('number', $request->number)->first();
 
-        if($existingSeason){
+        if($existingSeason)
+        {
             return response()->json(['error' => 'Já existe uma temporada com esse número para esse conteúdo'], 409);
         }
 
@@ -60,7 +56,7 @@ class SeasonController extends Controller
 
     public function show($id)
     {
-        $content = Season::find($id);
+        $content = Season::findOrFail($id);
 
         if($content){
             return response()->json($content, 200);
@@ -72,15 +68,8 @@ class SeasonController extends Controller
 
     public function update(Request $request, $id)
     {
-        $rules = [
-            "number" => 'min:0',
-            "content_id" => 'exists:contents,id'
-        ];  
-
-        $messages = [
-            'min' => 'O campo :attribute não pode ser menor que :min',
-            'exists' => 'O campo :attribute não existe'
-        ];
+        $rules = ValidationRules::seasonsRules(); 
+        $messages = ValidationRules::seasonsMessages();
    
         $validator = Validator::make($request->all(), $rules, $messages);
         
@@ -88,7 +77,7 @@ class SeasonController extends Controller
             return response()->json(['error' => $validator->errors()], 422);
         }
 
-        $season = Season::find($id);
+        $season = Season::findOrFail($id);
 
         //Verificando se já existe uma temporada com esse número para esse conteúdo
         $existingSeason = Season::where('content_id', $season->content_id)->where('number', $request->number)->first();
@@ -107,7 +96,7 @@ class SeasonController extends Controller
 
     public function destroy($id)
     {
-        $content = Season::find($id);
+        $content = Season::findOrFail($id);
 
         if($content){
             $content->delete();

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Polyfill\Intl\Idn\Info;
+use App\Http\Validation\ValidationRules;
 
 class ContentsController extends Controller
 {
@@ -28,22 +29,9 @@ class ContentsController extends Controller
 
     public function store(Request $request)
     {
-        $rules = [
-            "title" => 'required',
-            "year" => 'required | min:0 |',
-            "duration" => 'required | min:0',
-            "thumbnail" => 'image | mimes:jpeg,jpg,png,svg | max: 2048',
-            "type_content" => 'required | in:MOVIE,SERIE',
-        ];
+        $rules = ValidationRules::contentsRules();
 
-        $messages = [
-            'required' => 'O campo :attribute é obrigatório',
-            'min' => 'O campo :attribute não pode ser menor que :min',
-            'image' => "O campo :attribute deve ser uma imagem",
-            'mimes' => "O campo :attribute deve ser do tipo :values",
-            'max' => "O campo ::attribute não deve ser maior que :max kb",
-            'in' => "O campo :attribute deve ser um dos seguintes tipos: :values"
-        ];
+        $messages = ValidationRules::contentsMessages();
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
@@ -79,20 +67,9 @@ class ContentsController extends Controller
     public function update(Request $request, $id)
     {
 
-        $rules = [
-            "year" => 'min:0',
-            "duration" => 'min:0',
-            "thumbnail" => 'image | mimes:jpeg,jpg,png,svg | max: 2048',
-            "type_content" => 'in:MOVIE,SERIE',
-        ];
+        $rules = ValidationRules::contentsRules();
 
-        $messages = [
-            'min' => 'O campo :attribute não pode ser menor que :min',
-            'image' => "O campo :attribute deve ser uma imagem",
-            'mimes' => "O campo :attribute deve ser do tipo :values",
-            'max' => "O campo ::attribute não deve ser maior que :max kb",
-            'in' => "O campo :attribute deve ser um dos seguintes tipos: :values"
-        ];
+        $messages = ValidationRules::contentsMessages();
 
         $validator = Validator::make($request->all(), $rules, $messages);
 

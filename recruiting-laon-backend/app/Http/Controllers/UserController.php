@@ -8,6 +8,7 @@ use Illuminate\Contracts\Validation\Validator as ValidationValidator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Validation\ValidationRules;
 
 class UserController extends Controller
 {
@@ -21,20 +22,14 @@ class UserController extends Controller
     public function store(Request $request)
     {
 
-        $rules = [
-            "email" => "required | unique:users,email",
-            "name" => 'required',
-            "password" => 'required'
-        ];
+        $rules = ValidationRules::userRules();
 
-        $messages = [
-            "unique" => "O e-mail já existe no base de dados",
-            "required" => "O campo :attribute é obrigatório"
-        ];
+        $messages = ValidationRules::userMessages();
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if($validator->fails()){
+        if($validator->fails())
+        {
             return response()->json(['error' => $validator->errors()], 422);
         }
 
@@ -64,13 +59,8 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
 
-        $rules = [
-            "email" => "unique:users,email"
-        ];
-
-        $messages = [
-            "unique" => "O e-mail já existe no base de dados"
-        ];
+        $rules = ValidationRules::userRules();
+        $messages = ValidationRules::userMessages();
         
         $validator = Validator::make($request->all(), $rules, $messages);
 

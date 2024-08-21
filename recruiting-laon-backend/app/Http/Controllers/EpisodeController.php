@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Episode;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Validation\ValidationRules;
 
 class EpisodeController extends Controller
 {
@@ -17,17 +18,9 @@ class EpisodeController extends Controller
 
     public function store(Request $request)
     {
-        $rules = [
-            "title" => 'required',
-            "number" => 'required | min:0',
-            "season_id" => 'required | min:0 |exists:seasons,id'
-        ];  
+        $rules = ValidationRules::episodeRules();
 
-        $messages = [
-            'required' => 'O campo :attribute é obrigatório',
-            'min' => 'O campo :attribute não pode ser menor que :min',
-            'exists' => 'O campo :attribute não existe'
-        ];
+        $messages = ValidationRules::episodeMessages();
    
         $validator = Validator::make($request->all(), $rules, $messages);
         
@@ -50,7 +43,7 @@ class EpisodeController extends Controller
 
     public function show($id)
     {
-        $episode = Episode::find($id);
+        $episode = Episode::findOrFail($id);
 
         if($episode){
             return response()->json($episode, 200);
@@ -61,15 +54,9 @@ class EpisodeController extends Controller
 
     public function update(Request $request, $id)
     {
-        $rules = [
-            "number" => 'min:0',
-            "season_id" => 'min:0 |exists:seasons,id'
-        ];  
+        $rules = ValidationRules::episodeRules();
 
-        $messages = [
-            'min' => 'O campo :attribute não pode ser menor que :min',
-            'exists' => 'O campo :attribute não existe'
-        ];
+        $messages = ValidationRules::episodeMessages();
    
         $validator = Validator::make($request->all(), $rules, $messages);
         
@@ -84,25 +71,16 @@ class EpisodeController extends Controller
             return response()->json(['error' => 'Já existe um episódio com esse número para essa temporada'], 409);
         }
 
-        $episode = Episode::find($id);
+        $episode = Episode::findOrFail($id);
 
-        if($episode){
-            $episode->update($request->all());
-            return response()->json($episode, 200);
-        }else{
-            return response()->json(['error' => 'Episódio não encontrado'], 404);
-        }
+        $episode->update($request->all());
+        return response()->json($episode, 200);
     }
 
     public function destroy($id)
     {
-        $episode = Episode::find($id);
-
-        if($episode){
-            $episode->delete();
-            return response()->json(['message' => 'Episódio deletado com sucesso'], 200);
-        }else{
-            return response()->json(['error' => 'Episódio não encontrado'], 404);
-        }
+        $episode = Episode::findOrFail($id);
+        $episode->delete();
+        return response()->json(['message' => 'Episódio deletado com sucesso'], 200);
     }
 }
