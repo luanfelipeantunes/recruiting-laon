@@ -36,6 +36,7 @@ class UserController extends Controller
         $user = User::create([
             "email" => $request->email,
             "name" => $request->name,
+            "is_admin" => $request->is_admin,
             "password" => Hash::make($request->password)
         ]);
 
@@ -59,7 +60,7 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
 
-        $rules = ValidationRules::userRules();
+        $rules = ValidationRules::userUpdateRules();
         $messages = ValidationRules::userMessages();
         
         $validator = Validator::make($request->all(), $rules, $messages);

@@ -11,13 +11,7 @@ class Content extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        "title", "original_title", "year", "duration", "synopsis", "cast", "awards", "director", "thumbnail", "type_content"
-    ];
-
-    protected $casts = [
-        'cast' => 'array',
-        'awards' => 'array',
-        'ratings' => 'float'
+        "title", "original_title", "year", "duration", "synopsis", "director", "thumbnail", "type_content", "ratings"
     ];
 
     public function categories(){
@@ -26,5 +20,13 @@ class Content extends Model
 
     public function seasons(){
         return $this->hasMany(Season::class);
+    }
+
+    public function actors(){
+        return $this->belongsToMany(Actor::class, 'actor_content');
+    }
+
+    public function awards(){
+        return $this->belongsToMany(Award::class, 'award_content');
     }
 }

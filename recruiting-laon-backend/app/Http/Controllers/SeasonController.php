@@ -68,7 +68,7 @@ class SeasonController extends Controller
 
     public function update(Request $request, $id)
     {
-        $rules = ValidationRules::seasonsRules(); 
+        $rules = ValidationRules::seasonsUpdateRules(); 
         $messages = ValidationRules::seasonsMessages();
    
         $validator = Validator::make($request->all(), $rules, $messages);

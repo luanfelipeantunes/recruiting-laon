@@ -19,6 +19,10 @@ function Movie() {
     const id = useParams().id;
     const [content, setContent] = useState();
     const [loading, setLoading] = useState(true);
+    const [awards, setAwards] = useState();
+    const [actors, setActors] = useState();
+    //eslint-disable-next-line
+    const [categories, setCategories] = useState();
 
     const style = {
         display: 'flex',
@@ -37,6 +41,11 @@ function Movie() {
         axiosInstance.get(Constants.baseUrl + '/contents/' + id)
             .then((response) => {
                 setContent(response.data);
+
+                setActors(response.data.actors);
+                setAwards(response.data.awards);
+                setCategories(response.data.categories);
+
                 setLoading(false);
             })
             .catch((error) => {
@@ -67,8 +76,8 @@ function Movie() {
                             </div>
                             <div className={styles.infoContent}>
                                 <Infos style={{ width: '100%' }} title="Sinopse" subtitle={content.synopsis} />
-                                <Infos style={{ width: '49%', marginRight: '2%' }} title="Elenco" subtitle={content.cast} />
-                                <Infos style={{ width: '49%' }} title="Prêmios" subtitle={content.awards} />
+                                <Infos style={{ width: '49%', marginRight: '2%' }} title="Elenco" subtitle={actors.map(actor => actor.name).join(', ')} />
+                                <Infos style={{ width: '49%' }} title="Prêmios" subtitle={awards.map(award => award.name).join(', ')} />
                                 <Infos style={{ width: '49%', marginRight: '2%' }} title="Diretor" subtitle={content.director} />
                                 <Infos style={{ width: '49%' }} title="Avaliações" subtitle={content.ratings} />
                             </div>

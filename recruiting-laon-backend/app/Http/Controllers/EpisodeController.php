@@ -54,7 +54,7 @@ class EpisodeController extends Controller
 
     public function update(Request $request, $id)
     {
-        $rules = ValidationRules::episodeRules();
+        $rules = ValidationRules::episodeUpdateRules();
 
         $messages = ValidationRules::episodeMessages();
    

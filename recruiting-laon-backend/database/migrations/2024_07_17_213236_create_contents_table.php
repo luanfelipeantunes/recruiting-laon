@@ -20,8 +20,6 @@ class CreateContentsTable extends Migration
             $table->integer("year");
             $table->integer("duration");
             $table->string("synopsis");
-            $table->json("cast")->nullable();
-            $table->json("awards")->nullable();
             $table->string("director")->nullable();
             $table->float("ratings")->nullable();
             $table->string("thumbnail")->nullable();

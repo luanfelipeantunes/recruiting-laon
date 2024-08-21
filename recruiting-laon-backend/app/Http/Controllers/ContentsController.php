@@ -18,11 +18,11 @@ class ContentsController extends Controller
         $typeContent = request()->query('typeContent');
         $query = Content::query();
 
-        if($typeContent){
+        if ($typeContent) {
             $query->where('type_content', $typeContent);
         }
 
-        $contents = $query->get();
+        $contents = $query->with(['categories', 'actors', 'awards'])->get();
 
         return response()->json($contents, 200);
     }
@@ -35,31 +35,34 @@ class ContentsController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
         }
 
         $data = $request->all();
 
-        if($request->hasFile('thumbnail')){
-            $image = $request->file('thumbnail');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('img/contents'), $imageName);
-            $data['thumbnail'] = 'img/contents/' . $imageName;
-        }
+        //Armazenando a imagem
+        $image = $request->file('thumbnail');
+        $imageName = time() . '.' . $image->getClientOriginalExtension();
+        $image->move(public_path('img/contents'), $imageName);
+        $data['thumbnail'] = 'img/contents/' . $imageName;
 
         $content = Content::create($data);
 
-        if($request->has('categories')){
-            $content->categories()->sync($request->input('categories'));
-        }
+        //Adicionando as categorias
+        $content->categories()->sync($request->input('categories'));
+        //Adicionando os atores
+        $content->actors()->sync($request->input('actors'));
+        //Adicionando os prêmios
+        $content->awards()->sync($request->input('awards'));
+
 
         return response()->json($content, 201);
     }
 
     public function show($id)
     {
-        $content = Content::findOrFail($id);
+        $content = Content::findOrFail($id)->load(['categories', 'actors', 'awards']);
 
         return response()->json($content, 200);
     }
@@ -67,32 +70,48 @@ class ContentsController extends Controller
     public function update(Request $request, $id)
     {
 
-        $rules = ValidationRules::contentsRules();
+        $rules = ValidationRules::contentsUpdateRules();
 
         $messages = ValidationRules::contentsMessages();
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
         }
 
         $content = Content::findOrFail($id);
-    
+
         $data = $request->all();
-        
+
+        //Armazenando a imagem
         if($request->hasFile('thumbnail')){
             $image = $request->file('thumbnail');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('img/contents'), $imageName);
             $data['thumbnail'] = 'img/contents/' . $imageName;
         }
-    
+
         $content->update($data);
-    
+
+        //Adicionando as categorias
+        if($request->has('categories')){
+            $content->categories()->sync($request->input('categories'));
+        }
+
+        //Adicionando os atores
+        if($request->has('actors')){
+            $content->actors()->sync($request->input('actors'));
+        }
+
+        //Adicionando os prêmios
+        if($request->has('awards')){
+            $content->awards()->sync($request->input('awards'));
+        }
+
         return response()->json($content, 200);
     }
-    
+
     public function destroy($id)
     {
         $content = Content::findOrFail($id);

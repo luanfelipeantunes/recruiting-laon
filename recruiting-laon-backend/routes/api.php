@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\ActorController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\AwardController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContentsController;
 use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\SeasonController;
@@ -33,6 +36,24 @@ Route::prefix('seasons')->group(function() {
 Route::prefix('episodes')->group(function() {
     Route::get('/', [EpisodeController::class, 'index']);
     Route::get('/{id}', [EpisodeController::class, 'show']);
+});
+
+//Categorias
+Route::prefix('categories')->group(function() {
+    Route::get('/', [CategoryController::class, 'index']);
+    Route::post('/', [CategoryController::class, 'store']);
+});
+
+//Atores
+Route::prefix('actors')->group(function() {
+    Route::get('/', [ActorController::class, 'index']);
+    Route::post('/', [ActorController::class, 'store']);
+});
+
+//Prêmios
+Route::prefix('awards')->group(function() {
+    Route::get('/', [AwardController::class, 'index']);
+    Route::post('/', [AwardController::class, 'store']);
 });
 
 //Autenticação
