@@ -12,11 +12,11 @@ function Footer() {
                 <li className={styles.logo}> <img src={Logo} alt='Logo LaonLabs' /> </li>
 
                 <ul className={styles.links}>
-                    <li> <Link> Início </Link> </li>
-                    <li> <Link> Entrar ou Cadastrar </Link> </li>
-                    <li> <Link> Termos e Condições </Link> </li>
-                    <li> <Link> Política de Privaciade </Link> </li>
-                    <li> <Link> Ajuda </Link> </li>
+                    <li> <Link to="/home"> Início </Link> </li>
+                    <li> <Link to="/login"> Entrar ou Cadastrar </Link> </li>
+                    <li> <Link to="/home"> Termos e Condições </Link> </li>
+                    <li> <Link to="/home"> Política de Privaciade </Link> </li>
+                    <li> <Link to="/home"> Ajuda </Link> </li>
                 </ul>
 
                 <ul className={styles.medias}>

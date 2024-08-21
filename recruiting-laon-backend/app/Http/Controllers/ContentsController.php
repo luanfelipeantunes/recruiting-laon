@@ -10,9 +10,18 @@ use Symfony\Polyfill\Intl\Idn\Info;
 
 class ContentsController extends Controller
 {
+
     public function index()
     {
-        $contents = Content::all();
+
+        $typeContent = request()->query('typeContent');
+        $query = Content::query();
+
+        if($typeContent){
+            $query->where('type_content', $typeContent);
+        }
+
+        $contents = $query->get();
 
         return response()->json($contents, 200);
     }

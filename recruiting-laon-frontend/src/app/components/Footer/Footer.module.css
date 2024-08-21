@@ -42,6 +42,10 @@ ul {
     color: var(--gray-500);
 }
 
+.links li a:hover {
+    color: var(--white);
+}
+
 @media (max-width: 768px) {
     .footer{
         display: none;

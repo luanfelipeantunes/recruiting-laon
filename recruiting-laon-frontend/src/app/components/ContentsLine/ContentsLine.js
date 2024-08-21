@@ -20,7 +20,7 @@ function ContentsLine({ title, contents, hiddeHeader, link}) {
 
             {contents.map(content => (
                 <span className={styles.cardImage} key={content.id}>
-                    <Link to={`/movies/${content.id}`}>
+                    <Link to={`/contents/${content.id}`}>
                         <img src={`${Constants.urlRaiz}/${content.thumbnail}`} alt={content.original_title} />
                     </Link>
                 </span>

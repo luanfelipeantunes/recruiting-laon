@@ -41,10 +41,12 @@ function Register() {
         { href: "/", content: <span className="element-hidden"> ENTRAR </span> },
     ];
 
+    //Função que atualiza o estado do formulário
     const handleChange = (e) => {
         setData({...data, [e.target.name]: e.target.value});
     }
 
+    //Função que envia os dados do formulário para a API
     const handleSubmit = async (e) => {
         e.preventDefault();
         await axiosInstance.post(Constants.baseUrl + '/users', data)
@@ -59,7 +61,6 @@ function Register() {
         });
         
     }
-
     
 
     return <>

@@ -1,31 +1,20 @@
 import { useEffect, useState } from "react";
-import Background from "../components/Container/Background";
-import Container from "../components/Container/Container";
-import ContentsLine from "../components/ContentsLine/ContentsLine";
-import Footer from "../components/Footer/Footer";
-import Header from "../components/Header/Header";
-import Icon from "../components/Icon/Icon";
-import Logo from "../img/Logo.png";
-import { FaSearch } from "react-icons/fa";
 import axiosInstance from "../Utils/Utils";
+import { Constants } from "../Utils/Contants";
+import ContentsLine from "../components/ContentsLine/ContentsLine";
+import Background from "../components/Container/Background";
+import Header from "../components/Header/Header";
+import Container from "../components/Container/Container";
+import Footer from "../components/Footer/Footer";
+import Icon from "../components/Icon/Icon";
+import { FaSearch } from "react-icons/fa";
+import Logo from "../img/Logo.png";
 import Loader from "react-js-loader";
 
-
-function AllMovies() {
+function AllSeries() {
 
     const [contents, setContents] = useState([]);
     const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        axiosInstance.get('/contents?typeContent=MOVIE')
-            .then(response => {
-                setContents(response.data);
-                setLoading(false);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }, []);
 
     const style = {
         display: 'flex',
@@ -39,14 +28,25 @@ function AllMovies() {
         { href: "/home", content: <div style={style}> <Icon> <FaSearch /> </Icon> <span className="header-letter"> <Icon> S </Icon> </span> </div> },
     ];
 
+    useEffect(() => {
+        axiosInstance.get(Constants.baseUrl + '/contents?typeContent=SERIE')
+            .then((response) => {
+                setContents(response.data);
+                setLoading(false);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
+    }, [])
+
     return <>
         <Background>
             <Header links={links} />
             <Container>
-                {loading ? (<Loader type="box-rectangular" bgColor="var(--white)" size={100}/>
+            {loading ? (<Loader type="box-rectangular" bgColor="var(--white)" size={100}/>
                 ) : (
                     <>
-                        <h1 className="semibold40"> Filmes </h1>
+                        <h1 className="semibold40"> Series </h1>
                         <ContentsLine contents={contents} hiddeHeader={true} />
                     </>
                 )}
@@ -56,4 +56,4 @@ function AllMovies() {
     </>
 }
 
-export default AllMovies;
+export default AllSeries;

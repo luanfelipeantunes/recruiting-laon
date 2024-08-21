@@ -12,3 +12,7 @@ svg{
     justify-content: center;
     align-items: center;
 }
+
+.container:hover{
+    transform: scale(1.1);
+}

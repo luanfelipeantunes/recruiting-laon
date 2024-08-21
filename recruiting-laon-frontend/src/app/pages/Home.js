@@ -14,6 +14,7 @@ import axiosInstance from "../Utils/Utils";
 function Home() {
 
     const [loading, setLoading] = useState(true);
+
     //eslint-disable-next-line
     const [contents, setContents] = useState([]);
     const [movies, setMovies] = useState([]);
@@ -28,7 +29,10 @@ function Home() {
 
     const links = [
         { href: "/home", content: <img src={Logo} alt="Logo LaonLabs" /> },
-        { href: "/home", content: <div style={styles}> <Icon> <FaSearch /> </Icon> <span className="header-letter"> <Icon> S </Icon> </span> </div> },
+        {
+            href: "/home", content: <div style={styles}> <Icon> <FaSearch /> </Icon>
+                <span className="header-letter"> <Icon> S </Icon> </span> </div>
+        },
     ];
 
     useEffect(() => {
@@ -60,8 +64,8 @@ function Home() {
                 ) : (
                     <>
                         <h1 className="semibold40"> Populares </h1>
-                        <ContentsLine title="FILMES" contents={movies} link="/movies"/>
-                        <ContentsLine title="SERIES" contents={series} link='/series'/>
+                        <ContentsLine title="FILMES" contents={movies} link="/movies" />
+                        <ContentsLine title="SERIES" contents={series} link='/series' />
                     </>
                 )
 

@@ -8,6 +8,7 @@ import Movie from './app/pages/Movie';
 import { AuthProvider } from './app/Utils/Auth/AuthContext';
 import ProtectedRoute from './app/Utils/Auth/ProtectedRoute';
 import AllMovies from './app/pages/AllMovies';
+import AllSeries from './app/pages/AllSeries';
 
 
 function App() {
@@ -23,8 +24,9 @@ function App() {
           
           <Route path="/" element={<ProtectedRoute> <Home /> </ProtectedRoute>} />
           <Route path='/home' element={<ProtectedRoute> <Home /> </ProtectedRoute>} />
-          <Route path='/movies/:id' element={<ProtectedRoute> <Movie /> </ProtectedRoute>} />
+          <Route path='/contents/:id' element={<ProtectedRoute> <Movie /> </ProtectedRoute>} />
           <Route path='/movies' element={<ProtectedRoute> <AllMovies /> </ProtectedRoute>} />
+          <Route path='/series' element={<ProtectedRoute> <AllSeries /> </ProtectedRoute>} />
 
         </Routes>
 
