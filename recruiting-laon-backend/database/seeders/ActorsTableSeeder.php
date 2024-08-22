@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Actor;
 use Illuminate\Database\Seeder;
 
 class ActorsTableSeeder extends Seeder
@@ -13,6 +14,18 @@ class ActorsTableSeeder extends Seeder
      */
     public function run()
     {
-        //
+
+        $actors = [
+            'Tom Cruise',
+            'Brad Pitt',
+            'Angelina Jolie',
+            'Jennifer Aniston',
+            'Johnny Depp',
+            'Leonardo DiCaprio',
+        ];
+
+        foreach($actors as $actor){
+            Actor::create(['name' => $actor]);
+        }
     }
 }
