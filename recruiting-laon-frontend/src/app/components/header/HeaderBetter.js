@@ -62,7 +62,7 @@ function HeaderBetter() {
             content:
                 <div className="headerTools">
                     <Icon> <FaSearch /> </Icon>
-                    <span className="header-letter" onMouseEnter={() => setLogoutVisible(true)} onClick={() => setLogoutVisible(false)}> <Icon> S </Icon> </span>
+                    <span className="header-letter" onClick={() => setLogoutVisible(!logoutVisible)}> <Icon> S </Icon> </span>
                 </div>
         },
     ]
