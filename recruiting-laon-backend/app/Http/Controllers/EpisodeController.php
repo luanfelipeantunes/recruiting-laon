@@ -65,7 +65,7 @@ class EpisodeController extends Controller
         }
         
         //Verificando se já existe um episódio com esse número para essa temporada
-        $existingEpisode = Episode::where('season_id', $request->season_id)->where('number', $request->number)->first();
+        $existingEpisode = Episode::where(['season_id' => $request->season_id, 'number' => $request->number])->first();
 
         if($existingEpisode){
             return response()->json(['error' => 'Já existe um episódio com esse número para essa temporada'], 409);
@@ -81,6 +81,6 @@ class EpisodeController extends Controller
     {
         $episode = Episode::findOrFail($id);
         $episode->delete();
-        return response()->json(['message' => 'Episódio deletado com sucesso'], 200);
+        return response()->status(200);
     }
 }

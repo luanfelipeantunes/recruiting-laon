@@ -14,6 +14,7 @@ function HeaderBetter() {
     const { signout } = useAuth();
     const [logoutVisible, setLogoutVisible] = useState(false);
 
+    //Variações de Headers
     const headerLogin = [
         {
             href: "/register",
@@ -61,7 +62,7 @@ function HeaderBetter() {
             href: "/home",
             content:
                 <div className="headerTools">
-                    <Icon> <FaSearch /> </Icon>
+                        <Icon> <FaSearch /> </Icon>
                     <span className="header-letter" onClick={() => setLogoutVisible(!logoutVisible)} > <Icon> S </Icon> </span>
                 </div>
         },
@@ -69,16 +70,22 @@ function HeaderBetter() {
 
     //Verifica a rota atual e seta o header correspondente
     useEffect(() => {
-        if (location.pathname === '/register') {
-            setHeaderData(headerRegister);
-        } else if (location.pathname === '/login') {
-            setHeaderData(headerLogin);
-        } else {
-            setHeaderData(headerOne);
+        switch (location.pathname) {
+            case '/register':
+                setHeaderData(headerRegister);
+                break;
+            case '/login':
+                setHeaderData(headerLogin);
+                break;
+            default:
+                setHeaderData(headerOne);
+                break;
         }
+
         //eslint-disable-next-line
     }, [logoutVisible, location.pathname]);
 
+    //Função de logout
     const handleLogout = () => {
         signout();
     }
@@ -98,8 +105,7 @@ function HeaderBetter() {
             </ul>
         </header>
 
-        { logoutVisible &&
-
+        {logoutVisible &&
             <span className="logout" onClick={handleLogout}>
                 Logout <Icon> <FaArrowRightToBracket /> </Icon>
             </span>

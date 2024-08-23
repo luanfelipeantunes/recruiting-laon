@@ -9,36 +9,35 @@ import HeaderBetter from "../components/Header/HeaderBetter";
 
 
 function AllMovies() {
-
     const [contents, setContents] = useState([]);
     const [loading, setLoading] = useState(true);
 
-
-
     useEffect(() => {
-        axiosInstance.get('/contents?typeContent=MOVIE')
-            .then(response => {
-                setContents(response.data);
-                setLoading(false);
-            })
-            .catch(error => {
-                console.error(error);
-            });
+        axiosInstance.get('/contents?typeContent=MOVIE').then(response => {
+            setContents(response.data);
+        }).catch(error => {
+            console.error(error);
+        }).finally(() => {
+            setLoading(false);
+        });
     }, []);
 
     return <>
         <Background>
-            <HeaderBetter/>
+            <HeaderBetter />
+
             <Container>
-                {loading ? (<Loader type="box-rectangular" bgColor="var(--white)" size={100}/>
-                ) : (
+                {loading ?
+                    <Loader type="box-rectangular" bgColor="var(--white)" size={100} />
+                    :
                     <>
                         <h1 className="semibold40"> Filmes </h1>
                         <ContentsLine contents={contents} hiddeHeader={true} />
                     </>
-                )}
+                }
             </Container>
         </Background>
+
         <Footer />
     </>
 }

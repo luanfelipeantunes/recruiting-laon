@@ -6,35 +6,32 @@ import Loader from "react-js-loader";
 import { useEffect, useState } from "react";
 import axiosInstance from "../Utils/Utils";
 import HeaderBetter from "../components/Header/HeaderBetter";
+import { Constants } from "../Utils/Contants";
 
 
 function Home() {
-
     const [loading, setLoading] = useState(true);
-
     //eslint-disable-next-line
     const [contents, setContents] = useState([]);
     const [movies, setMovies] = useState([]);
     const [series, setSeries] = useState([]);
 
     useEffect(() => {
+        //Pegando os 6 primeiros MOVIES 
+        axiosInstance.get(Constants.baseUrl + '/contents?typeContent=MOVIE&limit=6').then((response) => {
+            setMovies(response.data);
+        }).catch((error) => {
+            console.log(error);
+        });
 
-        setLoading(true);
-
-        axiosInstance.get('/contents')
-            .then(response => {
-                setContents(response.data);
-
-                //Filtrando os conteúdos por tipo
-                setMovies(response.data.filter(content => content.type_content === 'MOVIE').slice(0, 6));
-                setSeries(response.data.filter(content => content.type_content === 'SERIE').slice(0, 6));
-
-                setLoading(false);
-            })
-            .catch(error => {
-                console.error(error);
-            });
-
+        //pegando os 6 primeiros SERIES
+        axiosInstance.get(Constants.baseUrl + '/contents?typeContent=SERIE&limit=6').then((response) => {
+            setSeries(response.data);
+        }).catch((error) => {
+            console.log(error);
+        }).finally(() => {
+            setLoading(false);
+        });
         // eslint-disable-next-line
     }, []);
 

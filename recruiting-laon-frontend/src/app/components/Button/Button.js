@@ -7,6 +7,7 @@ function Button({ children, style, handleSubmit, isLoading }) {
         <button
             className={`${styles.btn} semibold16`} style={style}
             onClick={handleSubmit}
+            disabled={isLoading}
         >
             {isLoading ? ( <Loader type="box-rectangular" bgColor="var(--gray-100)" size={80} />
 

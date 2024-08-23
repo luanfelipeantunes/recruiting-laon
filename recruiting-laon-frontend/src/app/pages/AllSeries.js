@@ -9,34 +9,35 @@ import Loader from "react-js-loader";
 import HeaderBetter from "../components/Header/HeaderBetter";
 
 function AllSeries() {
-
     const [contents, setContents] = useState([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axiosInstance.get(Constants.baseUrl + '/contents?typeContent=SERIE')
-            .then((response) => {
-                setContents(response.data);
-                setLoading(false);
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+        axiosInstance.get(Constants.baseUrl + '/contents?typeContent=SERIE').then((response) => {
+            setContents(response.data);
+        }).catch((error) => {
+            console.log(error);
+        }).finally(() => {
+            setLoading(false);
+        });
     }, [])
 
     return <>
         <Background>
             <HeaderBetter />
+
             <Container>
-            {loading ? (<Loader type="box-rectangular" bgColor="var(--white)" size={100}/>
-                ) : (
+                {loading ?
+                    <Loader type="box-rectangular" bgColor="var(--white)" size={100} />
+                    :
                     <>
                         <h1 className="semibold40"> Series </h1>
                         <ContentsLine contents={contents} hiddeHeader={true} />
                     </>
-                )}
+                }
             </Container>
         </Background>
+        
         <Footer />
     </>
 }

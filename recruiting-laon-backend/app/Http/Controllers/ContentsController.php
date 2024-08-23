@@ -16,14 +16,15 @@ class ContentsController extends Controller
     {
 
         $typeContent = request()->query('typeContent');
+        $limit = request()->query('limit');
         $query = Content::query();
+        $query->limit($limit ? $limit : 10);
 
         if ($typeContent) {
             $query->where('type_content', $typeContent);
         }
 
         $contents = $query->with(['categories', 'actors', 'awards'])->get();
-
         return response()->json($contents, 200);
     }
 
@@ -116,6 +117,6 @@ class ContentsController extends Controller
     {
         $content = Content::findOrFail($id);
         $content->delete();
-        return response()->json(["Conteúdo deletado"], 200);
+        return response()->status(200);
     }
 }

@@ -100,9 +100,7 @@ class SeasonController extends Controller
 
         if($content){
             $content->delete();
-            return response()->json(['message' => 'Conteúdo deletado com sucesso'], 200);
-        }else{
-            return response()->json(['error' => 'Conteúdo não encontrado'], 404);
+            return response()->status(200);
         }
     }
 }
