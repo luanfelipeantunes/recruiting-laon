@@ -1,17 +1,14 @@
 import { Link, useNavigate } from "react-router-dom";
 import Button from "../components/Button/Button";
 import FormBox from "../components/FormBox/FormBox";
-import Header from "../components/Header/Header";
-import Icon from "../components/Icon/Icon";
 import Input from "../components/Input/Input";
-import Logo from "../img/Logo.png";
 import styles from "./styles/Register.module.css";
-import { FaArrowLeft } from "react-icons/fa6";
 import { useAuth } from "../Utils/Auth/AuthContext";
 import { useState } from "react";
 import axiosInstance from "../Utils/Utils";
 import { Constants } from "../Utils/Contants";
 import Alert from "../components/Alert/Alert";
+import HeaderBetter from "../components/Header/HeaderBetter";
 
 
 function Register() {
@@ -26,20 +23,6 @@ function Register() {
         //eslint-disable-next-line
         navigate('/home');
     };
-
-    //Estilo a ser aplicado na div que contém o ícone e o texto de "Voltar"
-    const style = {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-    };
-
-    //Links que serão exibidos no Header
-    const links = [
-        { href: "/", content: <div style={style}> <Icon> <FaArrowLeft /> </Icon> <span className="element-hidden">VOLTAR</span> </div> },
-        { href: "/", content: <img src={Logo} alt="Logo LaonLabs" /> },
-        { href: "/", content: <span className="element-hidden"> ENTRAR </span> },
-    ];
 
     //Função que atualiza o estado do formulário
     const handleChange = (e) => {
@@ -64,7 +47,7 @@ function Register() {
     
 
     return <>
-        <Header links={links} />
+        <HeaderBetter />
         <FormBox>
 
             {message && <Alert message={message}/> }

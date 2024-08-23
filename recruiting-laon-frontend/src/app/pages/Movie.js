@@ -1,8 +1,4 @@
-import Header from "../components/Header/Header";
 import Container from "../components/Container/Container";
-import Icon from "../components/Icon/Icon";
-import { FaSearch } from "react-icons/fa";
-import Logo from "../img/Logo.png";
 import Footer from "../components/Footer/Footer";
 import Button from "../components/Button/Button";
 import styles from "./styles/Movie.module.css";
@@ -13,6 +9,7 @@ import { useEffect, useState } from "react";
 import axiosInstance from "../Utils/Utils";
 import { Constants } from "../Utils/Contants";
 import Loader from 'react-js-loader';
+import HeaderBetter from "../components/Header/HeaderBetter";
 
 function Movie() {
 
@@ -23,18 +20,6 @@ function Movie() {
     const [actors, setActors] = useState();
     //eslint-disable-next-line
     const [categories, setCategories] = useState();
-
-    const style = {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        width: '96px'
-    }
-
-    const links = [
-        { href: "/home", content: <img src={Logo} alt="Logo LaonLabs" /> },
-        { href: "/home", content: <div style={style}> <Icon> <FaSearch /> </Icon> <span className="header-letter"> <Icon> S </Icon> </span> </div> },
-    ];
 
     useEffect(() => {
         setLoading(true);
@@ -55,7 +40,7 @@ function Movie() {
 
     return <>
         <Background>
-            <Header links={links} />
+            <HeaderBetter />
             <Container>
 
                 {loading ? (<Loader type="box-rectangular" bgColor="var(--white)" size={100} />

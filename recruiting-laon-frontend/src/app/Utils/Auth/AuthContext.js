@@ -30,8 +30,19 @@ export function AuthProvider({ children }) {
         }
     };
 
+    const signout = () => {
+        const response = axiosInstance.post(Constants.baseUrl + '/logout')
+        .then(() => {
+            localStorage.removeItem('token');
+            setIsAuthenticated(false);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
+    }
+
     return (
-        <AuthContext.Provider value={{ isAuthenticated, signin, isLoading }}>
+        <AuthContext.Provider value={{ isAuthenticated, signin, signout, isLoading }}>
             {children}
         </AuthContext.Provider>
     )

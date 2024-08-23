@@ -2,13 +2,10 @@ import Background from "../components/Container/Background";
 import Container from "../components/Container/Container";
 import ContentsLine from "../components/ContentsLine/ContentsLine";
 import Footer from "../components/Footer/Footer";
-import Header from "../components/Header/Header";
-import Icon from "../components/Icon/Icon";
 import Loader from "react-js-loader";
-import Logo from "../img/Logo.png";
-import { FaSearch } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import axiosInstance from "../Utils/Utils";
+import HeaderBetter from "../components/Header/HeaderBetter";
 
 
 function Home() {
@@ -19,21 +16,6 @@ function Home() {
     const [contents, setContents] = useState([]);
     const [movies, setMovies] = useState([]);
     const [series, setSeries] = useState([]);
-
-    const styles = {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        width: '96px'
-    }
-
-    const links = [
-        { href: "/home", content: <img src={Logo} alt="Logo LaonLabs" /> },
-        {
-            href: "/home", content: <div style={styles}> <Icon> <FaSearch /> </Icon>
-                <span className="header-letter"> <Icon> S </Icon> </span> </div>
-        },
-    ];
 
     useEffect(() => {
 
@@ -58,7 +40,7 @@ function Home() {
 
     return <>
         <Background>
-            <Header links={links} />
+            <HeaderBetter />
             <Container>
                 {loading ? (<Loader type="box-rectangular" bgColor="var(--white)" size={100} />
                 ) : (
