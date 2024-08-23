@@ -62,7 +62,7 @@ function HeaderBetter() {
             content:
                 <div className="headerTools">
                     <Icon> <FaSearch /> </Icon>
-                    <span className="header-letter" onClick={() => setLogoutVisible(!logoutVisible)}> <Icon> S </Icon> </span>
+                    <span className="header-letter" onClick={() => setLogoutVisible(!logoutVisible)} > <Icon> S </Icon> </span>
                 </div>
         },
     ]
@@ -77,11 +77,12 @@ function HeaderBetter() {
             setHeaderData(headerOne);
         }
         //eslint-disable-next-line
-    }, [])
+    }, [logoutVisible, location.pathname]);
 
     const handleLogout = () => {
         signout();
     }
+
 
 
     return <>
@@ -97,9 +98,12 @@ function HeaderBetter() {
             </ul>
         </header>
 
-        <span className="logout" onClick={handleLogout} style={{display: !logoutVisible && 'none'}}>
-            Logout <Icon> <FaArrowRightToBracket /> </Icon>
-        </span>
+        { logoutVisible &&
+
+            <span className="logout" onClick={handleLogout}>
+                Logout <Icon> <FaArrowRightToBracket /> </Icon>
+            </span>
+        }
     </>
 }
 export default HeaderBetter;
