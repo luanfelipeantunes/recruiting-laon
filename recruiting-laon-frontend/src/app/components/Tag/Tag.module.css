@@ -1,0 +1,10 @@
+.tag{
+    border: 1px solid var(--gray-300);
+    color: var(--white);
+    display: flex;
+    padding: 4px 20px 4px 20px;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    border-radius: 32px;
+}

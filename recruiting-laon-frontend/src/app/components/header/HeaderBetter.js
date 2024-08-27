@@ -59,7 +59,7 @@ function HeaderBetter() {
             content: <img src={Logo} alt="Logo LaonLabs" />
         },
         {
-            href: "/home",
+            href: "",
             content:
                 <div className="headerTools">
                         <Icon> <FaSearch /> </Icon>

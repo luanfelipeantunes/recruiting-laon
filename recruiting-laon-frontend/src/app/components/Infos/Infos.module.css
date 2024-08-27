@@ -4,6 +4,7 @@
 }
 
 .content p{
+    display: inline;
     color: var(--gray-500);
 }
 

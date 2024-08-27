@@ -15,7 +15,7 @@ function Footer() {
                     <li> <Link to="/home"> Início </Link> </li>
                     <li> <Link to="/login"> Entrar ou Cadastrar </Link> </li>
                     <li> <Link to="/home"> Termos e Condições </Link> </li>
-                    <li> <Link to="/home"> Política de Privaciade </Link> </li>
+                    <li> <Link to="/home"> Política de Privacidade </Link> </li>
                     <li> <Link to="/home"> Ajuda </Link> </li>
                 </ul>
 
