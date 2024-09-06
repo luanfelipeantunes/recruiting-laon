@@ -31,7 +31,6 @@ function Login() {
     e.preventDefault();
     setButtonLoading(true);
     const data = await signin(credentials);
-    console.log(data);
 
 
     if (data.status === 200) {
