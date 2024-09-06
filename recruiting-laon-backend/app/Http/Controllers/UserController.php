@@ -33,12 +33,7 @@ class UserController extends Controller
             return response()->json(['error' => $validator->errors()], 422);
         }
 
-        $user = User::create([
-            "email" => $request->email,
-            "name" => $request->name,
-            "is_admin" => $request->is_admin,
-            "password" => Hash::make($request->password)
-        ]);
+        $user = User::create($request->all());
 
         $login = new AuthController();
         $login->login($request);

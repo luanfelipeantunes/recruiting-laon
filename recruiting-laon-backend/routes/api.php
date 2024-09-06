@@ -10,12 +10,13 @@ use App\Http\Controllers\SeasonController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
+//Autenticação
+Route::post('/login', [AuthController::class, 'login'])->name('login');
+
 //Usuários
 Route::prefix('users')->group(function () {
     Route::post('/', [UserController::class, 'store']);
     Route::get('/', [UserController::class, 'index']);
-    Route::get('/{id}', [UserController::class, 'show']);
-    Route::patch('/{id}', [UserController::class, 'update'])->middleware('auth:sanctum');
 });
 
 //Conteúdos
@@ -41,27 +42,21 @@ Route::prefix('episodes')->group(function() {
 //Categorias
 Route::prefix('categories')->group(function() {
     Route::get('/', [CategoryController::class, 'index']);
-    Route::post('/', [CategoryController::class, 'store']);
 });
 
 //Atores
 Route::prefix('actors')->group(function() {
     Route::get('/', [ActorController::class, 'index']);
-    Route::post('/', [ActorController::class, 'store']);
 });
 
 //Prêmios
 Route::prefix('awards')->group(function() {
     Route::get('/', [AwardController::class, 'index']);
-    Route::post('/', [AwardController::class, 'store']);
 });
 
-//Autenticação
-Route::post('/login', [AuthController::class, 'login']);
-Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 
-//Rotas protegidas
+//Rotas protegidas para administradores
 Route::middleware(['auth:sanctum', 'is_admin'])->group(function(){
     Route::prefix('contents')->group(function() {
         Route::post('/', [ContentsController::class, 'store']);
@@ -81,4 +76,17 @@ Route::middleware(['auth:sanctum', 'is_admin'])->group(function(){
         Route::delete('/{id}', [EpisodeController::class, 'destroy']);
     });
 
+});
+
+//Rotas protegidas para usuários autenticados
+Route::middleware('auth:sanctum')->group(function(){
+    Route::prefix('users')->group(function() {
+        Route::get('/{id}', [UserController::class, 'show']);
+        Route::patch('/{id}', [UserController::class, 'update']);
+    });
+
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('categories/', [CategoryController::class, 'store']);
+    Route::post('actors/', [ActorController::class, 'store']);
+    Route::post('awards/', [AwardController::class, 'store']);
 });

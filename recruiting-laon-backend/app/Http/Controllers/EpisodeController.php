@@ -81,6 +81,6 @@ class EpisodeController extends Controller
     {
         $episode = Episode::findOrFail($id);
         $episode->delete();
-        return response()->status(200);
+        return response()->json(null, 200);
     }
 }

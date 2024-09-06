@@ -100,7 +100,7 @@ class SeasonController extends Controller
 
         if($content){
             $content->delete();
-            return response()->status(200);
+            return response()->json(null, 200);
         }
     }
 }

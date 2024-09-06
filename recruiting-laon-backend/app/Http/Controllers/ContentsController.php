@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Content;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Polyfill\Intl\Idn\Info;
 use App\Http\Validation\ValidationRules;
+use Illuminate\Support\Facades\File;
 
 class ContentsController extends Controller
 {
@@ -20,7 +19,7 @@ class ContentsController extends Controller
         $search = request()->query('search');
 
         $query = Content::query();
-        $query->limit($limit ? $limit : 10);
+        $query->limit($limit ? $limit : 100);
 
         if ($typeContent) {
             $query->where('type_content', $typeContent);
@@ -92,13 +91,18 @@ class ContentsController extends Controller
         $data = $request->all();
 
         //Armazenando a imagem
-        if($request->hasFile('thumbnail')){
-            $image = $request->file('thumbnail');
-            $imageName = time() . '.' . $image->getClientOriginalExtension();
-            $image->move(public_path('img/contents'), $imageName);
+        if($request->has('thumbnail')){
+            $thumbnail = $request->thumbnail;
+            $thumbnail = str_replace('data:image/png;base64,', '', $thumbnail);
+            $thumbnail = str_replace(' ', '+', $thumbnail);
+            $imageName = time() . '.' . 'png';
+            File::put(public_path('img/contents/') . $imageName, base64_decode($thumbnail));
+
+            //Salva o caminho da imagem no banco
             $data['thumbnail'] = 'img/contents/' . $imageName;
         }
 
+        //Atualizando o conteúdo
         $content->update($data);
 
         //Adicionando as categorias
@@ -123,6 +127,6 @@ class ContentsController extends Controller
     {
         $content = Content::findOrFail($id);
         $content->delete();
-        return response()->status(200);
+        return response()->json(null, 200);
     }
 }

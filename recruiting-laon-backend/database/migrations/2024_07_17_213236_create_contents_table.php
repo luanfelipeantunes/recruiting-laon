@@ -19,7 +19,7 @@ class CreateContentsTable extends Migration
             $table->string("original_title");
             $table->integer("year");
             $table->integer("duration");
-            $table->string("synopsis");
+            $table->text("synopsis");
             $table->string("director")->nullable();
             $table->float("ratings")->nullable();
             $table->string("thumbnail")->nullable();

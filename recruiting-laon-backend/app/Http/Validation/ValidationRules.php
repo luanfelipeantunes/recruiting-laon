@@ -25,7 +25,6 @@ class ValidationRules
         return [
             "year" => ' min:0 |',
             "duration" => 'min:0',
-            "thumbnail" => 'image | mimes:jpeg,jpg,png,svg | max: 2048',
             "type_content" => 'in:MOVIE,SERIE',
             "actors" => 'min:0 | exists:actors,id',
             "awards" => 'min:0 | exists:awards,id',
