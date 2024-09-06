@@ -33,7 +33,7 @@ export function AuthProvider({ children }) {
     };
 
     const signout = () => {
-        const response = axiosInstance.post(Constants.baseUrl + '/logout')
+        axiosInstance.post(Constants.baseUrl + '/logout')
         .then(() => {
             localStorage.removeItem('token');
             setIsAuthenticated(false);
