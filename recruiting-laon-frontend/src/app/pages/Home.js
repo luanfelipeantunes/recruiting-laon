@@ -11,10 +11,27 @@ import { Constants } from "../Utils/Contants";
 
 function Home() {
     const [loading, setLoading] = useState(true);
-    //eslint-disable-next-line
-    const [contents, setContents] = useState([]);
     const [movies, setMovies] = useState([]);
     const [series, setSeries] = useState([]);
+    const [searchResults, setSearchResults] = useState([]);
+
+    //Função para buscar conteúdos
+    const handleSearch = (term) => {    
+        console.log(term);
+         
+        if (term) {
+            setLoading(true);
+            axiosInstance.get(Constants.baseUrl + '/contents?limit=6&search=' + term).then((response) => {
+                setSearchResults(response.data);         
+            }).catch((error) => {
+                console.log(error);
+            }).finally(() => {
+                setLoading(false);
+            });
+        } else {
+            setSearchResults([]);
+        }
+    }
 
     useEffect(() => {
         //Pegando os 6 primeiros MOVIES 
@@ -37,14 +54,21 @@ function Home() {
 
     return <>
         <Background>
-            <HeaderBetter />
+            <HeaderBetter onSearch={handleSearch} resetSearch={() => setSearchResults([])}/>
             <Container>
                 {loading ? (<Loader type="box-rectangular" bgColor="var(--white)" size={100} />
                 ) : (
                     <>
                         <h1 className="semibold40"> Populares </h1>
-                        <ContentsLine title="FILMES" contents={movies} link="/movies" />
-                        <ContentsLine title="SERIES" contents={series} link='/series' />
+                        {searchResults.length > 0 ? (
+                            <ContentsLine title="RESULTADOS DA BUSCA" contents={searchResults} />
+                        ) : (
+                            <>
+                                <ContentsLine title="FILMES" contents={movies} link="/movies" />
+                                <ContentsLine title="SERIES" contents={series} link='/series' />
+                            </>
+
+                        )}
                     </>
                 )
 

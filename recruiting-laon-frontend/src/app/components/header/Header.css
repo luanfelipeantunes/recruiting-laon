@@ -62,6 +62,7 @@
     right: 32%;
 }
 
+
 @media (max-width: 768px) {
     .element-hidden {
         display: none;
@@ -74,5 +75,12 @@
 
     .logout{
         right: 10;
+    }
+
+    .search{
+        position: relative;
+        left: 0;
+        width: 90%;
+        margin: auto;
     }
 }

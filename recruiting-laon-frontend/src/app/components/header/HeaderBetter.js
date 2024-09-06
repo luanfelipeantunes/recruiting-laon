@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, matchPath, useLocation } from "react-router-dom";
 import './Header.css';
 import { useEffect, useState } from "react";
 import Icon from "../Icon/Icon";
@@ -6,13 +6,27 @@ import { FaArrowLeft, FaArrowRightToBracket } from "react-icons/fa6";
 import { FaSearch } from "react-icons/fa";
 import Logo from "../../img/Logo.png";
 import { useAuth } from "../../Utils/Auth/AuthContext";
+import Input from "../Input/Input";
 
-function HeaderBetter() {
+function HeaderBetter({onSearch, resetSearch}) {
 
     const location = useLocation();
     const [headerData, setHeaderData] = useState([]);
     const { signout } = useAuth();
     const [logoutVisible, setLogoutVisible] = useState(false);
+    const [searchVisible, setSearchVisible] = useState(false);
+
+    const {user} = useAuth();
+    const letterUser = user ? user.name.charAt(0) : null;
+    
+
+    //Função para mostrar ou esconder a barra de pesquisa
+    const toggleSearch = () => {
+        if(searchVisible){
+            resetSearch();
+        }
+        setSearchVisible(!searchVisible);
+    }
 
     //Variações de Headers
     const headerLogin = [
@@ -62,20 +76,37 @@ function HeaderBetter() {
             href: "",
             content:
                 <div className="headerTools">
-                        <Icon> <FaSearch /> </Icon>
-                    <span className="header-letter" onClick={() => setLogoutVisible(!logoutVisible)} > <Icon> S </Icon> </span>
+                    <span onClick={toggleSearch}> <Icon> <FaSearch /> </Icon> </span>
+                    <span className="header-letter" onClick={() => setLogoutVisible(!logoutVisible)} > <Icon> {letterUser} </Icon> </span>
+                </div>
+        },
+    ]
+
+    const headerNoSearch = [
+        {
+            href: "/home",
+            content: <img src={Logo} alt="Logo LaonLabs" />
+        },
+        {
+            href: "",
+            content:
+                <div className="headerTools">
+                    <span className="header-letter" onClick={() => setLogoutVisible(!logoutVisible)} > <Icon> {letterUser} </Icon> </span>
                 </div>
         },
     ]
 
     //Verifica a rota atual e seta o header correspondente
     useEffect(() => {
-        switch (location.pathname) {
-            case '/register':
+        switch (true) {
+            case location.pathname === '/register':
                 setHeaderData(headerRegister);
                 break;
-            case '/login':
+            case location.pathname === '/login':
                 setHeaderData(headerLogin);
+                break;
+            case matchPath('/contents/:id', location.pathname) !== null:
+                setHeaderData(headerNoSearch);
                 break;
             default:
                 setHeaderData(headerOne);
@@ -83,11 +114,16 @@ function HeaderBetter() {
         }
 
         //eslint-disable-next-line
-    }, [logoutVisible, location.pathname]);
+    }, [logoutVisible, searchVisible, location.pathname]);
 
     //Função de logout
     const handleLogout = () => {
         signout();
+    }
+
+    //Função que envia o termo de busca para o componente pai
+    const handleSearchTerm = (e) => {
+        onSearch(e.target.value);
     }
 
 
@@ -105,7 +141,19 @@ function HeaderBetter() {
             </ul>
         </header>
 
+        {searchVisible && (
+            <div className={`search`}>
+                <Input
+                    type="text"
+                    placeholder="Buscar conteúdos..."
+                    name="search"
+                    handleChange={handleSearchTerm}
+                />
+            </div>
+        )}
+
         {logoutVisible &&
+            
             <span className="logout" onClick={handleLogout}>
                 Logout <Icon> <FaArrowRightToBracket /> </Icon>
             </span>

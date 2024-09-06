@@ -17,11 +17,17 @@ class ContentsController extends Controller
 
         $typeContent = request()->query('typeContent');
         $limit = request()->query('limit');
+        $search = request()->query('search');
+
         $query = Content::query();
         $query->limit($limit ? $limit : 10);
 
         if ($typeContent) {
             $query->where('type_content', $typeContent);
+        }
+
+        if($search){
+            $query->where('title', 'LIKE', '%'.$search.'%');
         }
 
         $contents = $query->with(['categories', 'actors', 'awards'])->get();

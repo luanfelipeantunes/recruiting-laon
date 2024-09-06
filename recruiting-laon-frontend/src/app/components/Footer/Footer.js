@@ -1,7 +1,7 @@
 import styles from './Footer.module.css';
 import Logo from '../../img/Logo.png';
 import { Link } from 'react-router-dom';
-import { FaFacebookF, FaTwitter, FaYoutube   } from "react-icons/fa6";
+import { FaFacebookF, FaInstagram, FaYoutube } from "react-icons/fa6";
 import Icon from '../Icon/Icon';
 
 
@@ -9,7 +9,9 @@ function Footer() {
     return (
         <footer className={styles.footer}>
             <ul className={styles.footerList}>
-                <li className={styles.logo}> <img src={Logo} alt='Logo LaonLabs' /> </li>
+                <li className={styles.logo}>
+                    <Link to="/home"> <img src={Logo} alt='Logo LaonLabs' /> </Link>
+                </li>
 
                 <ul className={styles.links}>
                     <li> <Link to="/home"> Início </Link> </li>
@@ -20,9 +22,9 @@ function Footer() {
                 </ul>
 
                 <ul className={styles.medias}>
-                    <li> <Link> <Icon> <FaFacebookF /> </Icon> </Link> </li>
-                    <li> <Link> <Icon> <FaTwitter /> </Icon> </Link> </li>
-                    <li> <Link> <Icon> <FaYoutube /> </Icon> </Link> </li>
+                    <li> <Link to="https://www.instagram.com/laonlabs/"> <Icon> <FaFacebookF /> </Icon> </Link> </li>
+                    <li> <Link to="https://www.instagram.com/laonlabs/"> <Icon> <FaInstagram /> </Icon> </Link> </li>
+                    <li> <Link to="https://www.instagram.com/laonlabs/"> <Icon> <FaYoutube /> </Icon> </Link> </li>
                 </ul>
             </ul>
         </footer>

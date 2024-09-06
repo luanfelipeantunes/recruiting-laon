@@ -6,6 +6,7 @@ const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [user, setUser] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -23,6 +24,7 @@ export function AuthProvider({ children }) {
             const response = await axiosInstance.post(Constants.baseUrl + '/login', credentials);
             localStorage.setItem('token', response.data.token);
             setIsAuthenticated(true);
+            setUser(response.data.user);
             return response;
 
         } catch (error) {
@@ -42,7 +44,7 @@ export function AuthProvider({ children }) {
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, signin, signout, isLoading }}>
+        <AuthContext.Provider value={{ isAuthenticated, signin, signout, isLoading, user}}>
             {children}
         </AuthContext.Provider>
     )
