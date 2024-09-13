@@ -39,6 +39,13 @@ function Movie() {
             })
     }, [id]);
 
+    const calculateDuration = (duration) => {
+        const hours = Math.floor(duration / 60);
+        const minutes = duration % 60;
+
+        return `${hours}h${minutes}min`;
+    }
+
     return <>
         <Background>
             <HeaderBetter />
@@ -59,7 +66,7 @@ function Movie() {
                                 <h1 className="semibold40"> {content.title} </h1>
                                 <p className="semibold16"> Título original: <span className="regular16">{content.original_title}</span></p>
                                 <p className="semibold16"> Ano: <span className="regular16">{content.year}</span></p>
-                                <p className="semibold16"> Duração: <span className="regular16">{content.duration}</span></p>
+                                <p className="semibold16"> Duração: <span className="regular16">{calculateDuration(content.duration)}</span></p>
 
                                 <ul className={styles.tags}>
                                     {categories.map(category => (

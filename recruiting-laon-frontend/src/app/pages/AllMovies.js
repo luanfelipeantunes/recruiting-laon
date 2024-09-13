@@ -62,7 +62,9 @@ function AllMovies() {
                     :
                     <>
                         <h1 className="semibold40"> Filmes </h1>
-                        <ContentsLine contents={contents} hiddeHeader={true} />
+                        {contents.length === 0 ? <p className="semibold24" style={{color: "var(--gray-400)"}}>Nenhum filme encontrado</p>
+                            :
+                            <ContentsLine contents={contents} hiddeHeader={true} />}
 
                         {contents.length < limit ? null
                             :

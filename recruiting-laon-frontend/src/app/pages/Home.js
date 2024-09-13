@@ -14,15 +14,15 @@ function Home() {
     const [movies, setMovies] = useState([]);
     const [series, setSeries] = useState([]);
     const [searchResults, setSearchResults] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
 
     //Função para buscar conteúdos
     const handleSearch = (term) => {    
-        console.log(term);
-         
+        setSearchTerm(term);
         if (term) {
             setLoading(true);
             axiosInstance.get(Constants.baseUrl + '/contents?limit=6&search=' + term).then((response) => {
-                setSearchResults(response.data);         
+                setSearchResults(response.data);
             }).catch((error) => {
                 console.log(error);
             }).finally(() => {
@@ -54,7 +54,7 @@ function Home() {
 
     return <>
         <Background>
-            <HeaderBetter onSearch={handleSearch} resetSearch={() => setSearchResults([])}/>
+            <HeaderBetter onSearch={handleSearch} resetSearch={() => {setSearchResults([]); setSearchTerm('')}}/>
             <Container>
                 {loading ? (<Loader type="box-rectangular" bgColor="var(--white)" size={100} />
                 ) : (
@@ -62,6 +62,8 @@ function Home() {
                         <h1 className="semibold40"> Populares </h1>
                         {searchResults.length > 0 ? (
                             <ContentsLine title="RESULTADOS DA BUSCA" contents={searchResults} />
+                        ) : searchTerm ? (
+                            <p className="semibold24" style={{color: "var(--gray-400)"}}> Nenhum resultado encontrado </p>
                         ) : (
                             <>
                                 <ContentsLine title="FILMES" contents={movies} link="/movies" />

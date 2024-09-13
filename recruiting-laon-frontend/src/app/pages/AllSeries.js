@@ -52,7 +52,7 @@ function AllSeries() {
 
     return <>
         <Background>
-            <HeaderBetter onSearch={handleSearch} resetSearch={resetSearch}/>
+            <HeaderBetter onSearch={handleSearch} resetSearch={resetSearch} />
 
             <Container>
                 {loading ?
@@ -60,7 +60,9 @@ function AllSeries() {
                     :
                     <>
                         <h1 className="semibold40"> Series </h1>
-                        <ContentsLine contents={contents} hiddeHeader={true} />
+                        {contents.length === 0 ? <h2 className="semibold24" style={{color: "var(--gray-400)"}}> Nenhum conteúdo encontrado </h2>
+                            :
+                            <ContentsLine contents={contents} hiddeHeader={true} />}
 
                         {contents.length < limit ? null
                             :
@@ -70,7 +72,7 @@ function AllSeries() {
                 }
             </Container>
         </Background>
-        
+
         <Footer />
     </>
 }

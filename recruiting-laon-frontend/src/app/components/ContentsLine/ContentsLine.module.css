@@ -15,7 +15,8 @@
 
 .cardImage:hover{
     cursor: pointer;
-    border: 2px solid var(--gray-500);
+    outline: 2px solid var(--gray-500);
+    outline-offset: -2px;
 }
 
 .headerContents{
