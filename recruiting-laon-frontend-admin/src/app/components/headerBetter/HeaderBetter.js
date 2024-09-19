@@ -8,9 +8,12 @@ import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import { Drawer } from '@mui/material';
+import DrawerItems from './DrawerItems';
 
-export default function HeaderBetter() {
+export default function HeaderBetter({titlePage}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
+  const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -20,7 +23,14 @@ export default function HeaderBetter() {
     setAnchorEl(null);
   };
 
-  return (
+  const toggleDrawer = (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setIsDrawerOpen(!isDrawerOpen);
+  }
+
+  return <>
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static" sx={{ backgroundColor: "var(--gray-300)" }}>
         <Toolbar>
@@ -30,11 +40,12 @@ export default function HeaderBetter() {
             color="inherit"
             aria-label="menu"
             sx={{ mr: 2 }}
+            onClick={toggleDrawer}
           >
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Dashboard
+            {titlePage}
           </Typography>
           <div>
             <IconButton
@@ -69,5 +80,12 @@ export default function HeaderBetter() {
         </Toolbar>
       </AppBar>
     </Box>
-  );
+    <Drawer
+      anchor='left' 
+      open={isDrawerOpen}
+      onClose={toggleDrawer}
+    >
+      <DrawerItems />
+    </Drawer>
+  </>
 }
