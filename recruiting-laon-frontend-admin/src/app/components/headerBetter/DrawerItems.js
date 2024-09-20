@@ -1,8 +1,9 @@
 import { Divider, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import GroupIcon from '@mui/icons-material/Group';
-import InfoIcon from '@mui/icons-material/Info';
-import MiscellaneousServicesIcon from '@mui/icons-material/MiscellaneousServices';
-import ContactsIcon from '@mui/icons-material/Contacts';
+import LocalMoviesIcon from '@mui/icons-material/LocalMovies';
+import ClassIcon from '@mui/icons-material/Class';
+import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
+import RecentActorsIcon from '@mui/icons-material/RecentActors';
 import Logo from "../../img/Logo.png";
 import { useNavigate } from "react-router-dom";
 
@@ -23,6 +24,7 @@ export default function DrawerItems() {
                 </ListItemButton>
             </ListItem>
             <Divider sx={{ backgroundColor: "var(--gray-200)", borderWidth: "1px" }} />
+
             <ListItem>
                 <ListItemButton onClick={() => navigate("/users")}>
                     <ListItemIcon>
@@ -31,28 +33,37 @@ export default function DrawerItems() {
                     <ListItemText primary="Usuários" />
                 </ListItemButton>
             </ListItem>
+
             <ListItem>
-                <ListItemButton>
+                <ListItemButton onClick={() => navigate("/contents")}>
                     <ListItemIcon>
-                        <InfoIcon />
+                        <LocalMoviesIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Sobre" />
+                    <ListItemText primary="Séries e Filmes" />
                 </ListItemButton>
             </ListItem>
             <ListItem>
-                <ListItemButton>
+                <ListItemButton onClick={() => navigate("/categories")}>
                     <ListItemIcon>
-                        <MiscellaneousServicesIcon />
+                        <ClassIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Serviços" />
+                    <ListItemText primary="Categorias" />
                 </ListItemButton>
             </ListItem>
             <ListItem >
-                <ListItemButton>
+                <ListItemButton onClick={() => navigate("/awards")}>
                     <ListItemIcon>
-                        <ContactsIcon />
+                        <EmojiEventsIcon />
                     </ListItemIcon>
-                    <ListItemText primary="Contact" />
+                    <ListItemText primary="Prêmios" />
+                </ListItemButton>
+            </ListItem>
+            <ListItem>
+                <ListItemButton onClick={() => navigate("/actors")}>
+                    <ListItemIcon>
+                        <RecentActorsIcon />
+                    </ListItemIcon>
+                    <ListItemText primary="Atores" />
                 </ListItemButton>
             </ListItem>
         </List>

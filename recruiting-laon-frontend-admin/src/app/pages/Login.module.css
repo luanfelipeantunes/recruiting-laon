@@ -6,8 +6,7 @@
     border: 2px solid var(--gray-200);
     padding: 32px;
     width: 35%;
-    height: 80%;
-    margin-top: 5%;
+    margin: 2% 0;
 }
 
 .input{

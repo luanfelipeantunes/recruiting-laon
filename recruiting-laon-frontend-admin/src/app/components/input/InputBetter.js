@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import { FormControl, Input, InputLabel } from '@mui/material';
 
-export default function InputBetter({ label, type }) {
+export default function InputBetter({ label, type, handleChange, name, onKeyPress }) {
   return (
     <Box
       component="form"
@@ -12,7 +12,13 @@ export default function InputBetter({ label, type }) {
     >
       <FormControl variant="standard" sx={{ width: "80%" }}>
         <InputLabel htmlFor="component-simple" sx={{ color: 'var(--gray-400)' }}>{label}</InputLabel>
-        <Input id="component-simple" type={type} defaultValue="" sx={{ color: "var(--white)" }} />
+        <Input
+          id="component-simple" type={type} defaultValue=""
+          sx={{ color: "var(--white)" }}
+          onChange={handleChange}
+          name={name}
+          onKeyDown={onKeyPress}
+        />
       </FormControl>
     </Box>
   );
