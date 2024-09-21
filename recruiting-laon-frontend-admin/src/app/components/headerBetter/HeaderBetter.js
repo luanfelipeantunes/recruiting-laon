@@ -7,13 +7,18 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import Menu from '@mui/material/Menu';
 import { Drawer } from '@mui/material';
 import DrawerItems from './DrawerItems';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../utils/auth/AuthContext';
 
-export default function HeaderBetter({titlePage}) {
+export default function HeaderBetter({ titlePage }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = React.useState(false);
+  const { signout } = useAuth();
+  const navigate = useNavigate();
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -22,6 +27,13 @@ export default function HeaderBetter({titlePage}) {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleSignout = () => {
+    signout();
+    navigate('/');
+  }
+
+
 
   const toggleDrawer = (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -73,15 +85,19 @@ export default function HeaderBetter({titlePage}) {
               open={Boolean(anchorEl)}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
+              <MenuItem
+                onClick={handleSignout}
+              >
+                <ExitToAppIcon/>
+                <p style={{marginLeft: "10px"}}>Sair</p>
+              </MenuItem>
             </Menu>
           </div>
         </Toolbar>
       </AppBar>
     </Box>
     <Drawer
-      anchor='left' 
+      anchor='left'
       open={isDrawerOpen}
       onClose={toggleDrawer}
     >

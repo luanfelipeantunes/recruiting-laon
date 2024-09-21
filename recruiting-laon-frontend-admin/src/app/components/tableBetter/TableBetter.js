@@ -2,7 +2,7 @@ import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, 
 import { Link } from 'react-router-dom';
 
 
-export default function TableBetter({ data, columns, link }) {
+export default function TableBetter({ data, columns, link, handleDelete }) {
   return (
     <TableContainer component={Paper} sx={{
       borderRadius: "0",
@@ -27,10 +27,21 @@ export default function TableBetter({ data, columns, link }) {
                   {column.id === 'actions' ? (
                     <>
                       <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                        <Button variant="contained" color="primary" sx={{ marginRight: "5%" }}>
+
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          sx={{ marginRight: "5%" }}
+                        >
                           <Link to={link + "/edit/" + row.id}>Editar</Link>
                         </Button>
-                        <Button variant="contained" color="error" sx={{ marginRight: "5%" }}>
+
+                        <Button
+                          variant="contained"
+                          color="error"
+                          sx={{ marginRight: "5%" }}
+                          onClick={() => handleDelete(row.id)}
+                        >
                           Excluir
                         </Button>
                       </div>

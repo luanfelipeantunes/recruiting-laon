@@ -76,6 +76,10 @@ Route::middleware(['auth:sanctum', 'is_admin'])->group(function(){
         Route::delete('/{id}', [EpisodeController::class, 'destroy']);
     });
 
+    Route::prefix('users')->group(function() {
+        Route::delete('/{id}', [UserController::class, 'destroy']);
+    });
+
 });
 
 //Rotas protegidas para usuários autenticados

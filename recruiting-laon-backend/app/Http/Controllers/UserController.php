@@ -78,6 +78,6 @@ class UserController extends Controller
 
         $user->delete();
 
-        return response()->status(200);
+        return response()->json(null, 200);
     }
 }
