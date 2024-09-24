@@ -27,7 +27,6 @@ export default function ButtonFileUpload({ label, onChange }) {
             <VisuallyHiddenInput
                 type="file"
                 onChange={onChange}
-                multiple
             />
         </Button>
     )

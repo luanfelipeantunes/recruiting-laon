@@ -1,7 +1,7 @@
 import { Autocomplete, TextField } from "@mui/material";
 
 
-export default function AutoCompleteBetter({ options, label}) {
+export default function AutoCompleteBetter({ options, label, handleChange }) {
     return (
         <Autocomplete
             required
@@ -10,6 +10,7 @@ export default function AutoCompleteBetter({ options, label}) {
             id="multiple-limit-tags"
             options={options}
             getOptionLabel={(option) => option.name}
+            onChange={handleChange}
             renderInput={(params) => (
                 <TextField {...params} label={label} placeholder={label} />
             )}
