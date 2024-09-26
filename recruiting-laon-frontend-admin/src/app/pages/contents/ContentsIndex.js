@@ -48,6 +48,7 @@ export default function Contents() {
             })
             .catch(error => {
                 console.error(error);
+                setTypeMessage('error');
                 setMessage('Erro ao buscar conteúdos');
             }).finally(() => {
                 setLoading(false);

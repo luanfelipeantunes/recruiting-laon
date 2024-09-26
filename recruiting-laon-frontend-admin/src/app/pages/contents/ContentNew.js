@@ -19,7 +19,7 @@ export default function ContentNew() {
     const [awards, setAwards] = useState([]);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
-    const [file, setFile] = useState('');
+    const [file, setFile] = useState(null);
     const [categoriesSelected, setCategoriesSelected] = useState([]);
     const [actorsSelected, setActorsSelected] = useState([]);
     const [awardsSelected, setAwardsSelected] = useState([]);
@@ -80,7 +80,6 @@ export default function ContentNew() {
             categories: categoriesIds,
             actors: actorsIds,
             awards: awardsIds,
-
         })
 
         const formData = new FormData();
@@ -92,13 +91,19 @@ export default function ContentNew() {
         formData.append('synopsis', content.synopsis);
         formData.append('director', content.director);
         formData.append('type_content', content.type_content);
-        formData.append('categories', categoriesIds);
-        formData.append('actors', actorsIds);
-        formData.append('awards', awardsIds);
+        /*        formData.append('categories', categoriesIds);
+                formData.append('actors', actorsIds);
+                formData.append('awards', awardsIds);
+        */
 
+        categoriesIds.forEach(id => {formData.append('categories[]', id)});
+        actorsIds.forEach(id => {formData.append('actors[]', id)});
+        awardsIds.forEach(id => {formData.append('awards[]', id)});
+        
         for (let [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
         }
+
         setLoading(false);
 
         axiosInstance.post(Constants.baseUrl + '/contents', formData)
@@ -237,7 +242,7 @@ export default function ContentNew() {
                             id="filled-read-only-input"
                             label="Arquivo"
                             variant="filled"
-                            value={file?.name}
+                            value={file ? file.name : ''}
                             slotProps={{
                                 input: {
                                     readOnly: true,
