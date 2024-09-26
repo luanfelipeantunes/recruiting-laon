@@ -19,7 +19,7 @@ export default function ContentNew() {
     const [awards, setAwards] = useState([]);
     const [loading, setLoading] = useState(false);
     const [message, setMessage] = useState('');
-    const [fileName, setFileName] = useState('');
+    const [file, setFile] = useState('');
     const [categoriesSelected, setCategoriesSelected] = useState([]);
     const [actorsSelected, setActorsSelected] = useState([]);
     const [awardsSelected, setAwardsSelected] = useState([]);
@@ -69,8 +69,39 @@ export default function ContentNew() {
 
     //Função de adicionar conteúdo
     const handleSubmit = () => {
+
         setLoading(true);
-        axiosInstance.post(Constants.baseUrl + '/contents', content)
+        const categoriesIds = categoriesSelected.map(category => category.id);
+        const actorsIds = actorsSelected.map(actor => actor.id);
+        const awardsIds = awardsSelected.map(award => award.id);
+
+        setContent({
+            ...content,
+            categories: categoriesIds,
+            actors: actorsIds,
+            awards: awardsIds,
+
+        })
+
+        const formData = new FormData();
+        formData.append('thumbnail', file);
+        formData.append('title', content.title);
+        formData.append('original_title', content.original_title);
+        formData.append('year', content.year);
+        formData.append('duration', content.duration);
+        formData.append('synopsis', content.synopsis);
+        formData.append('director', content.director);
+        formData.append('type_content', content.type_content);
+        formData.append('categories', categoriesIds);
+        formData.append('actors', actorsIds);
+        formData.append('awards', awardsIds);
+
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+        setLoading(false);
+
+        axiosInstance.post(Constants.baseUrl + '/contents', formData)
             .then(() => {
                 navigate('/contents');
             })
@@ -85,27 +116,10 @@ export default function ContentNew() {
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
-            setFileName(file.name);
+            setFile(file);
+            console.log(file);
         }
     }
-
-    //Função para lidar com a mudança de categorias
-    const handleCategoriesChange = (value) => {
-        setCategoriesSelected(value);
-        console.log(value);
-    };
-
-    //Função para lidar com a mudança de atores
-    const handleActorsChange = (value) => {
-        setActorsSelected(value);
-        console.log(value);
-    };
-
-    //Função para lidar com a mudança de prêmios
-    const handleAwardsChange = (value) => {
-        setAwardsSelected(value);
-        console.log(value);
-    };
 
     return (
         <>
@@ -126,7 +140,6 @@ export default function ContentNew() {
                         gap: '20px'
                     }}>
                         <TextField
-                            required
                             fullWidth
                             id="title"
                             label="Título"
@@ -136,7 +149,6 @@ export default function ContentNew() {
                             onChange={handleChange}
                         />
                         <TextField
-                            required
                             fullWidth
                             id='original_title'
                             label='Título Original'
@@ -151,7 +163,6 @@ export default function ContentNew() {
                         gap: '20px'
                     }}>
                         <TextField
-                            required
                             fullWidth
                             id="year"
                             label="Ano"
@@ -160,7 +171,6 @@ export default function ContentNew() {
                             onChange={handleChange}
                         />
                         <TextField
-                            required
                             fullWidth
                             id="duration"
                             label="Duração (min)"
@@ -171,7 +181,6 @@ export default function ContentNew() {
                     </div>
 
                     <TextField
-                        required
                         fullWidth
                         id="synopsis"
                         label="Sinopse"
@@ -181,7 +190,6 @@ export default function ContentNew() {
                     />
 
                     <TextField
-                        required
                         fullWidth
                         id="director"
                         label="Diretor"
@@ -193,19 +201,19 @@ export default function ContentNew() {
                     <AutoCompleteBetter
                         options={categories}
                         label="Categorias"
-                        handleChange={handleCategoriesChange}
+                        handleChange={(value) => setCategoriesSelected(value)}
                     />
 
                     <AutoCompleteBetter
                         options={actors}
                         label="Atores"
-                        handleChange={handleActorsChange}
+                        handleChange={(value) => setActorsSelected(value)}
                     />
 
                     <AutoCompleteBetter
                         options={awards}
                         label="Prêmios"
-                        handleChange={handleAwardsChange}
+                        handleChange={(value) => setAwardsSelected(value)}
                     />
 
                     <RadioGroup
@@ -229,7 +237,7 @@ export default function ContentNew() {
                             id="filled-read-only-input"
                             label="Arquivo"
                             variant="filled"
-                            value={fileName}
+                            value={file?.name}
                             slotProps={{
                                 input: {
                                     readOnly: true,
