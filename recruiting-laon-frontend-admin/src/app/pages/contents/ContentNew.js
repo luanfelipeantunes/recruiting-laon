@@ -91,11 +91,6 @@ export default function ContentNew() {
         formData.append('synopsis', content.synopsis);
         formData.append('director', content.director);
         formData.append('type_content', content.type_content);
-        /*        formData.append('categories', categoriesIds);
-                formData.append('actors', actorsIds);
-                formData.append('awards', awardsIds);
-        */
-
         categoriesIds.forEach(id => {formData.append('categories[]', id)});
         actorsIds.forEach(id => {formData.append('actors[]', id)});
         awardsIds.forEach(id => {formData.append('awards[]', id)});
@@ -139,7 +134,10 @@ export default function ContentNew() {
                         <AlertBetter severity="error" message={message} />
                     </div>}
 
-                <FormContent formTitle="Adicionar Série ou Filme">
+                <FormContent 
+                    formTitle="Adicionar Série ou Filme"
+                    handleSubmit={handleSubmit}
+                >
                     <div style={{
                         display: 'flex',
                         gap: '20px'
@@ -252,16 +250,6 @@ export default function ContentNew() {
                                 margin: "0 0 0 20px",
                                 width: "79%"
                             }}
-                        />
-                    </div>
-
-                    <div style={{
-                        marginTop: "20px",
-                    }}>
-                        <ButtonSubmit
-                            text="Adicionar"
-                            loading={loading}
-                            handleClick={() => { handleSubmit() }}
                         />
                     </div>
                 </FormContent>

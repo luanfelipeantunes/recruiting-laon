@@ -1,9 +1,10 @@
 import { Box, ThemeProvider, Typography } from "@mui/material";
 import theme from "../../theme/Theme";
 import AlertBetter from "../alert/AlertBetter";
+import ButtonSubmit from "../button/ButtonSubmit";
 
 
-export default function FormContent({ children, formTitle, message}) {
+export default function FormContent({ children, formTitle, message, handleSubmit }) {
     return (
         <Box sx={{
             width: "60%",
@@ -23,12 +24,20 @@ export default function FormContent({ children, formTitle, message}) {
             </Typography>
 
             {message && <AlertBetter message={message} severity="error" />}
-            
+
             <Box component="form" noValidate>
                 <ThemeProvider theme={theme}>
 
                     {children}
 
+                    <div style={{
+                        marginTop: "20px",
+                    }}>
+                        <ButtonSubmit
+                            text="Adicionar"
+                            handleClick={handleSubmit}
+                        />
+                    </div>
                 </ThemeProvider>
 
             </Box>
