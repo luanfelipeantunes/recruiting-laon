@@ -88,17 +88,13 @@ function Movie() {
                                 <div className={styles.buttonAside}>
                                     <RoundedButton
                                         handleClick={handleFavorite}
+                                        styles={isFavorite ? { backgroundColor: '#FFA500', color: 'var(--white)'} : {}}
                                     >
                                         {isFavorite ? (
-                                            <>
-                                                <FaStar /> Favoritado
-                                            </>
+                                            <> <FaStar /> Favoritado </>
                                         ) : (
-                                            <>
-                                                <FaRegStar /> Favoritar
-                                            </>
-                                        )
-                                        }
+                                            <> <FaRegStar /> Favoritar </>
+                                        )}
                                     </RoundedButton>
 
                                 </div>
