@@ -2,6 +2,18 @@
 O projeto é formado por uma única ponta, que é a do cliente. É possível visualizar a listagem de Filmes e Series, bem como buscar por conteúdos específicos.
 Além disso, também é possível acessar os detalhes de um determinado conteúdo para ver mais sobre ele.
 
+## Tecnologias e Versões
+```
+PHP 7.4.33
+```
+```
+Node.js 20.17.0
+```
+```
+MySQL 8.3.0
+```
+
+
 ## Rodando o projeto
 
 ### Back-end
