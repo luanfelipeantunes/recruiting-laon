@@ -123,6 +123,7 @@ class ContentsController extends Controller
         return response()->json($content, 200);
     }
 
+    //Método para deletar um conteúdo
     public function destroy($id)
     {
         $content = Content::findOrFail($id);

@@ -10,11 +10,13 @@ export function AuthProvider({ children }) {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-       setIsAuthenticated(true);
-    };
-    setIsLoading(false);
+        const token = localStorage.getItem('token');
+        const user = localStorage.getItem('user');
+        if (token && user) {
+            setUser(JSON.parse(user));
+            setIsAuthenticated(true);
+        };
+        setIsLoading(false);
     }, []);
 
 
@@ -25,6 +27,7 @@ export function AuthProvider({ children }) {
             localStorage.setItem('token', response.data.token);
             setIsAuthenticated(true);
             setUser(response.data.user);
+            localStorage.setItem('user', JSON.stringify(response.data.user));
             return response;
 
         } catch (error) {
@@ -34,17 +37,19 @@ export function AuthProvider({ children }) {
 
     const signout = () => {
         axiosInstance.post(Constants.baseUrl + '/logout')
-        .then(() => {
-            localStorage.removeItem('token');
-            setIsAuthenticated(false);
-        })
-        .catch((error) => {
-            console.error(error);
-        });
+            .then(() => {
+                localStorage.removeItem('token');
+                localStorage.removeItem('user');
+                setUser(null);
+                setIsAuthenticated(false);
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     }
 
     return (
-        <AuthContext.Provider value={{ isAuthenticated, signin, signout, isLoading, user}}>
+        <AuthContext.Provider value={{ isAuthenticated, signin, signout, isLoading, user }}>
             {children}
         </AuthContext.Provider>
     )

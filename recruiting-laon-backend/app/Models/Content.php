@@ -29,4 +29,8 @@ class Content extends Model
     public function awards(){
         return $this->belongsToMany(Award::class, 'award_content');
     }
+
+    public function favoritedBy(){
+        return $this->belongsToMany(User::class, 'favorites');
+    }
 }

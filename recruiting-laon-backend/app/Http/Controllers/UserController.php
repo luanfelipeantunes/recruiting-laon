@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Validation\ValidationRules;
+use App\Models\Content;
 
 class UserController extends Controller
 {
@@ -28,8 +29,7 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
         }
 
@@ -44,11 +44,10 @@ class UserController extends Controller
 
     public function show($id)
     {
-        
+
         $user = User::findOrFail($id);
 
         return response()->json($user, 200);
-
     }
 
 
@@ -57,10 +56,10 @@ class UserController extends Controller
 
         $rules = ValidationRules::userUpdateRules();
         $messages = ValidationRules::userMessages();
-        
+
         $validator = Validator::make($request->all(), $rules, $messages);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()], 422);
         }
 
@@ -79,5 +78,31 @@ class UserController extends Controller
         $user->delete();
 
         return response()->json(null, 200);
+    }
+
+    //Método para favoritar um conteúdo
+    public function toggleFavorite(Request $request, $contentId)
+    {
+        $user = User::findOrFail($request->user()->id);
+
+        $content = Content::findOrFail($contentId);
+
+        //Verifica se o conteúdo já está favoritado pelo usuário
+        //Se estiver, remove o favorito, senão, adiciona
+        if ($user->favorited()->where('content_id', $contentId)->exists()) {
+            $user->favorited()->detach($contentId);
+            return response()->json(['favorited' => false], 200);
+        } else {
+            $user->favorited()->attach($contentId, ['created_at' => now(), 'updated_at' => now()]);
+            return response()->json(['favorited' => true], 200);
+        }
+    }
+
+    public function getUserFavorites(Request $request){
+        $user = User::findOrFail($request->user()->id);
+
+        $favorites = $user->favorited;
+
+        return response()->json($favorites, 200);
     }
 }

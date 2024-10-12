@@ -22,10 +22,12 @@ function Movie() {
     const [awards, setAwards] = useState();
     const [actors, setActors] = useState();
     const [isFavorite, setIsFavorite] = useState(false);
+    const [favoriteLoading, setFavoriteLoading] = useState(false);
 
     //eslint-disable-next-line
     const [categories, setCategories] = useState();
 
+    //Busca o conteúdo pelo id
     useEffect(() => {
         setLoading(true);
         axiosInstance.get(Constants.baseUrl + '/contents/' + id)
@@ -43,6 +45,24 @@ function Movie() {
             })
     }, [id]);
 
+    //Busca os filmes favoritados pelo usuário
+    //E verifica se o filme atual está na lista de favoritos
+    //Se estiver, o botão de favoritar fica com layout de favoritado
+    useEffect(() => {
+        axiosInstance.get(Constants.baseUrl + '/favorites')
+        .then((response) => {
+            const favorites = response.data;
+            if(favorites.some(fav => fav.id == id)) {
+                setIsFavorite(true);
+            }
+            
+        })
+        .catch((error) => {
+            console.error(error);
+        })
+    }, [id]);
+
+    //Calcula a duração do filme
     const calculateDuration = (duration) => {
         const hours = Math.floor(duration / 60);
         const minutes = duration % 60;
@@ -50,8 +70,20 @@ function Movie() {
         return `${hours}h${minutes}min`;
     }
 
+    //Função para favoritar um filme
+    //Se o filme já estiver favoritado, é removido
     const handleFavorite = () => {
-        setIsFavorite(!isFavorite);
+        setFavoriteLoading(true);
+        axiosInstance.post(Constants.baseUrl + '/favorite/' + id)
+        .then((response) => {
+            console.log(response);
+            setIsFavorite(!isFavorite);
+        })
+        .catch((error) => {
+            console.error(error);
+        }).finally(() => {
+            setFavoriteLoading(false);
+        })
     }
 
     return <>
@@ -89,6 +121,7 @@ function Movie() {
                                     <RoundedButton
                                         handleClick={handleFavorite}
                                         styles={isFavorite ? { backgroundColor: '#FFA500', color: 'var(--white)'} : {}}
+                                        isLoading={favoriteLoading}
                                     >
                                         {isFavorite ? (
                                             <> <FaStar /> Favoritado </>

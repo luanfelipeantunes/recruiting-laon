@@ -88,6 +88,9 @@ Route::middleware('auth:sanctum')->group(function(){
         Route::get('/{id}', [UserController::class, 'show']);
         Route::patch('/{id}', [UserController::class, 'update']);
     });
+    
+    Route::get('/favorites', [UserController::class, 'getUserFavorites']);
+    Route::post('/favorite/{content_id}', [UserController::class, 'toggleFavorite']);
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('categories/', [CategoryController::class, 'store']);
