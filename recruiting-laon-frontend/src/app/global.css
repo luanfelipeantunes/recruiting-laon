@@ -69,6 +69,10 @@ a{
     color: var(--white);
 }
 
+button{
+    cursor: pointer;
+}
+
 @media (max-width: 768px){
     body{
         background-color: var(--gray-200);

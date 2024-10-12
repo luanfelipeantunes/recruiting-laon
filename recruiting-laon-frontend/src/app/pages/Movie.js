@@ -11,6 +11,8 @@ import { Constants } from "../Utils/Contants";
 import Loader from 'react-js-loader';
 import HeaderBetter from "../components/Header/HeaderBetter";
 import Tag from "../components/Tag/Tag";
+import RoundedButton from "../components/RoundedButton/RoundedButton";
+import { FaRegStar, FaStar } from "react-icons/fa6";
 
 function Movie() {
 
@@ -19,6 +21,8 @@ function Movie() {
     const [loading, setLoading] = useState(true);
     const [awards, setAwards] = useState();
     const [actors, setActors] = useState();
+    const [isFavorite, setIsFavorite] = useState(false);
+
     //eslint-disable-next-line
     const [categories, setCategories] = useState();
 
@@ -46,6 +50,10 @@ function Movie() {
         return `${hours}h${minutes}min`;
     }
 
+    const handleFavorite = () => {
+        setIsFavorite(!isFavorite);
+    }
+
     return <>
         <Background>
             <HeaderBetter />
@@ -62,20 +70,39 @@ function Movie() {
                         </div>
                         <div className={styles.infosAside}>
 
-                            <div className={styles.headerInfos}>
-                                <h1 className="semibold40"> {content.title} </h1>
-                                <p className="semibold16"> Título original: <span className="regular16">{content.original_title}</span></p>
-                                <p className="semibold16"> Ano: <span className="regular16">{content.year}</span></p>
-                                <p className="semibold16"> Duração: <span className="regular16">{calculateDuration(content.duration)}</span></p>
+                            <div className={styles.movieInfo}>
+                                <div className={styles.headerInfos}>
+                                    <h1 className="semibold40"> {content.title} </h1>
+                                    <p className="semibold16"> Título original: <span className="regular16">{content.original_title}</span></p>
+                                    <p className="semibold16"> Ano: <span className="regular16">{content.year}</span></p>
+                                    <p className="semibold16"> Duração: <span className="regular16">{calculateDuration(content.duration)}</span></p>
+                                    <ul className={styles.tags}>
+                                        {categories.map(category => (
+                                            <li key={category.id}>
+                                                <Tag>{category.name}</Tag>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
 
-                                <ul className={styles.tags}>
-                                    {categories.map(category => (
-                                        <li key={category.id}>
-                                            <Tag>{category.name}</Tag>
-                                        </li>
-                                    ))}
+                                <div className={styles.buttonAside}>
+                                    <RoundedButton
+                                        handleClick={handleFavorite}
+                                    >
+                                        {isFavorite ? (
+                                            <>
+                                                <FaStar /> Favoritado
+                                            </>
+                                        ) : (
+                                            <>
+                                                <FaRegStar /> Favoritar
+                                            </>
+                                        )
+                                        }
+                                    </RoundedButton>
 
-                                </ul>
+                                </div>
+
                             </div>
 
                             <div className={styles.infoContent}>
@@ -83,7 +110,7 @@ function Movie() {
                                 <Infos style={{ width: '49%', marginRight: '2%' }} title="Elenco" subtitle={actors.map(actor => actor.name).join(', ')} />
                                 <Infos style={{ width: '49%' }} title="Prêmios" subtitle={awards.map(award => award.name).join(', ')} />
                                 <Infos style={{ width: '49%', marginRight: '2%' }} title="Diretor" subtitle={content.director} />
-                                <Infos style={{ width: '49%' }} title="Avaliações" subtitle={content.ratings} valueRatings={content.ratings}/>
+                                <Infos style={{ width: '49%' }} title="Avaliações" subtitle={content.ratings} valueRatings={content.ratings} />
                             </div>
                         </div>
                     </div>

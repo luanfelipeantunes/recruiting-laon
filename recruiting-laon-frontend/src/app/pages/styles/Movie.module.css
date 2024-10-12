@@ -26,6 +26,15 @@
     margin-top: -10px;
 }
 
+.movieInfo{
+    display: flex;
+    justify-content: space-between;
+}
+
+.buttonAside{
+    margin-top: 35px;
+}
+
 .infoContent {
     display: flex;
     flex-wrap: wrap;
