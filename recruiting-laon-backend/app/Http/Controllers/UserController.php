@@ -98,6 +98,7 @@ class UserController extends Controller
         }
     }
 
+    //Método para retornar os favoritos de um usuário
     public function getUserFavorites(Request $request){
         $user = User::findOrFail($request->user()->id);
 

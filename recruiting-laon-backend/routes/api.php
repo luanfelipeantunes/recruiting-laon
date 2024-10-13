@@ -9,6 +9,7 @@ use App\Http\Controllers\EpisodeController;
 use App\Http\Controllers\SeasonController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Models\Content;
 
 //Autenticação
 Route::post('/login', [AuthController::class, 'login'])->name('login');
