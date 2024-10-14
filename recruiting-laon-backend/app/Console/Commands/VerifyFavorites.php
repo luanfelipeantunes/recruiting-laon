@@ -45,7 +45,7 @@ class VerifyFavorites extends Command
         info("Command ---> Yesterday: $yesterday");
 
         $contents = DB::table('favorites')
-            ->whereDate('created_at', $yesterday)
+            ->whereDate(DB::raw('DATE_SUB(created_at , INTERVAL 3 HOUR)'), $yesterday)
             ->select('content_id', DB::raw('count(*) as total_favorited'))
             ->groupBy('content_id')
             ->get();
