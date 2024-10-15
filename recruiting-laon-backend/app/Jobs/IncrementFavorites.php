@@ -8,9 +8,9 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\DB;
+use App\Models\FavoriteCount;
 
-class FavoriteCount implements ShouldQueue
+class IncrementFavorites implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -31,9 +31,14 @@ class FavoriteCount implements ShouldQueue
     public function handle()
     {
         info("Job --> ContentId: $this->contentId - Total Favorited: $this->totalFavorited");
-        DB::table('favorite_count')->updateOrInsert(
-            ['content_id' => $this->contentId],
-            ['total_favorited' => DB::raw("total_favorited + $this->totalFavorited")]
-        );
+
+        $favoriteCount = FavoriteCount::firstOrNew(['content_id' => $this->contentId]);
+
+        if ($favoriteCount->exists) {
+            $favoriteCount->increment('total_favorited', $this->totalFavorited);
+        } else {
+            $favoriteCount->total_favorited = $this->totalFavorited;
+            $favoriteCount->save();
+        }
     }
 }

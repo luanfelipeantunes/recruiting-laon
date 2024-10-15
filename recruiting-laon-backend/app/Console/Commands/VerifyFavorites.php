@@ -2,7 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\FavoriteCount;
+use App\Jobs\IncrementFavorites;
+use App\Models\Favorite;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
@@ -40,23 +41,20 @@ class VerifyFavorites extends Command
      */
     public function handle()
     {
-        $yesterday = Carbon::yesterday();
+        $yesterdayStart = Carbon::yesterday()->startOfDay()->addHours(3);
+        $yesterdayEnd = Carbon::yesterday()->endOfDay()->addHours(3);
 
-        info("Command ---> Yesterday: $yesterday");
+        info("Command ---> Yesterday: $yesterdayStart - $yesterdayEnd");
 
-        $contents = DB::table('favorites')
-            ->whereDate(DB::raw('DATE_SUB(created_at , INTERVAL 3 HOUR)'), $yesterday)
-            ->select('content_id', DB::raw('count(*) as total_favorited'))
+        $contents = Favorite::whereBetween('created_at', [$yesterdayStart, $yesterdayEnd])
+            ->select('content_id')
+            ->selectRaw('count(*) as total_favorited')
             ->groupBy('content_id')
             ->get();
 
-            info($contents);
-
             foreach($contents as $content){
                 info("Command ---> ContentId: $content->content_id - Total Favorited: $content->total_favorited");
-                FavoriteCount::dispatch($content->content_id, $content->total_favorited);
+                IncrementFavorites::dispatch($content->content_id, $content->total_favorited);
             }
-
-
     }
 }
